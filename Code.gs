@@ -15,9 +15,14 @@
  *
  * Hoja "EMPRESAS" (columnas, en este orden):
  *   ID | Empresa | Slug | Pais | Ciudad | Categoria | Descripcion | Productos
- *   | Website | WhatsApp | Email | Estado | RankingAmount | RankingSince
+ *   | Logo | Website | WhatsApp | Email | Estado | RankingAmount | RankingSince
  *
+ *   - Descripcion: OBLIGATORIA, una o dos frases — se muestra directamente
+ *     en la fila del ranking, no solo en el detalle.
  *   - Productos: separar varios valores con punto y coma ";"
+ *   - Logo: URL pública de la imagen (recomendado 256x256 o 128x128, cuadrada,
+ *     fondo transparente o blanco). Si está vacío, el sitio muestra un ícono
+ *     genérico de fábrica en su lugar — no rompe nada dejarlo en blanco.
  *   - Estado: PENDIENTE | PUBLICADO
  *   - RankingSince: fecha/hora en que se alcanzó el RankingAmount actual
  *
@@ -35,8 +40,8 @@ const SHEET_PAGOS = 'PAGOS';
 
 const COL_EMPRESAS = {
   ID: 1, EMPRESA: 2, SLUG: 3, PAIS: 4, CIUDAD: 5, CATEGORIA: 6,
-  DESCRIPCION: 7, PRODUCTOS: 8, WEBSITE: 9, WHATSAPP: 10, EMAIL: 11,
-  ESTADO: 12, RANKING_AMOUNT: 13, RANKING_SINCE: 14
+  DESCRIPCION: 7, PRODUCTOS: 8, LOGO: 9, WEBSITE: 10, WHATSAPP: 11, EMAIL: 12,
+  ESTADO: 13, RANKING_AMOUNT: 14, RANKING_SINCE: 15
 };
 
 const COL_PAGOS = {
@@ -113,6 +118,7 @@ function recalcularYPublicar() {
       descripcion: row[COL_EMPRESAS.DESCRIPCION - 1],
       productos: String(row[COL_EMPRESAS.PRODUCTOS - 1] || '')
         .split(';').map(s => s.trim()).filter(Boolean),
+      logo: row[COL_EMPRESAS.LOGO - 1] || '',
       website: row[COL_EMPRESAS.WEBSITE - 1],
       whatsapp: row[COL_EMPRESAS.WHATSAPP - 1],
       email: row[COL_EMPRESAS.EMAIL - 1],

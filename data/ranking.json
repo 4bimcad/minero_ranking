@@ -9,13 +9,19 @@
       "ciudad": "Arequipa",
       "categoria": "Equipos y Maquinaria",
       "descripcion": "Proveedor de equipos y soluciones para operaciones mineras, con soporte técnico local en Arequipa.",
-      "productos": ["Equipos de chancado", "Sistemas de molienda", "Repuestos", "Servicio técnico"],
+      "productos": [
+        "Equipos de chancado",
+        "Sistemas de molienda",
+        "Repuestos",
+        "Servicio técnico"
+      ],
       "website": "https://example.com",
       "whatsapp": "51900000001",
       "email": "contacto@miningtech.pe",
       "estado": "PUBLICADO",
       "rankingAmount": 300,
-      "rankingSince": "2026-08-01T10:00:00-05:00"
+      "rankingSince": "2026-08-01T10:00:00-05:00",
+      "logo": ""
     },
     {
       "id": "EMP-002",
@@ -25,13 +31,17 @@
       "ciudad": "Antofagasta",
       "categoria": "Servicios Mineros",
       "descripcion": "Servicios integrales para faenas mineras en el norte de Chile.",
-      "productos": ["Mantenimiento", "Logística en faena"],
+      "productos": [
+        "Mantenimiento",
+        "Logística en faena"
+      ],
       "website": "https://example.com",
       "whatsapp": "56900000002",
       "email": "contacto@andinamining.cl",
       "estado": "PUBLICADO",
       "rankingAmount": 250,
-      "rankingSince": "2026-08-03T10:00:00-05:00"
+      "rankingSince": "2026-08-03T10:00:00-05:00",
+      "logo": ""
     },
     {
       "id": "EMP-003",
@@ -41,13 +51,17 @@
       "ciudad": "Medellín",
       "categoria": "Perforación y Voladura",
       "descripcion": "Especialistas en perforación diamantina y servicios de voladura controlada.",
-      "productos": ["Perforación diamantina", "Voladura controlada"],
+      "productos": [
+        "Perforación diamantina",
+        "Voladura controlada"
+      ],
       "website": "https://example.com",
       "whatsapp": "57900000003",
       "email": "contacto@geodrill.co",
       "estado": "PUBLICADO",
       "rankingAmount": 180,
-      "rankingSince": "2026-08-05T10:00:00-05:00"
+      "rankingSince": "2026-08-05T10:00:00-05:00",
+      "logo": ""
     },
     {
       "id": "EMP-004",
@@ -57,13 +71,17 @@
       "ciudad": "Lima",
       "categoria": "Laboratorios y Análisis",
       "descripcion": "Análisis de leyes minerales y control de calidad para operaciones a mediana y gran escala.",
-      "productos": ["Análisis de leyes", "Control de calidad"],
+      "productos": [
+        "Análisis de leyes",
+        "Control de calidad"
+      ],
       "website": "https://example.com",
       "whatsapp": "51900000004",
       "email": "contacto@labmineral.pe",
       "estado": "PUBLICADO",
       "rankingAmount": 120,
-      "rankingSince": "2026-08-07T10:00:00-05:00"
+      "rankingSince": "2026-08-07T10:00:00-05:00",
+      "logo": ""
     },
     {
       "id": "EMP-005",
@@ -73,13 +91,17 @@
       "ciudad": "Arequipa",
       "categoria": "Insumos y Reactivos",
       "descripcion": "Distribución de insumos y reactivos para plantas de procesamiento mineral.",
-      "productos": ["Reactivos de flotación", "Insumos para lixiviación"],
+      "productos": [
+        "Reactivos de flotación",
+        "Insumos para lixiviación"
+      ],
       "website": "https://example.com",
       "whatsapp": "51900000005",
       "email": "contacto@abcmining.pe",
       "estado": "PUBLICADO",
       "rankingAmount": 80,
-      "rankingSince": "2026-08-10T10:00:00-05:00"
+      "rankingSince": "2026-08-10T10:00:00-05:00",
+      "logo": ""
     },
     {
       "id": "EMP-006",
@@ -89,13 +111,18 @@
       "ciudad": "Arequipa",
       "categoria": "Seguridad y EPP",
       "descripcion": "Equipos de protección personal certificados para minería subterránea y tajo abierto.",
-      "productos": ["Cascos", "Arneses", "Detectores de gas"],
+      "productos": [
+        "Cascos",
+        "Arneses",
+        "Detectores de gas"
+      ],
       "website": "https://example.com",
       "whatsapp": "51900000006",
       "email": "contacto@segurmin.pe",
       "estado": "PUBLICADO",
       "rankingAmount": 50,
-      "rankingSince": "2026-08-12T10:00:00-05:00"
+      "rankingSince": "2026-08-12T10:00:00-05:00",
+      "logo": ""
     },
     {
       "id": "EMP-007",
@@ -105,13 +132,17 @@
       "ciudad": "Arequipa",
       "categoria": "Transporte y Logística",
       "descripcion": "Transporte especializado de carga pesada y minerales entre operaciones y puerto.",
-      "productos": ["Transporte de carga pesada", "Transporte de mineral"],
+      "productos": [
+        "Transporte de carga pesada",
+        "Transporte de mineral"
+      ],
       "website": "https://example.com",
       "whatsapp": "51900000007",
       "email": "contacto@transmin.pe",
       "estado": "PUBLICADO",
       "rankingAmount": 0,
-      "rankingSince": "2026-08-14T10:00:00-05:00"
+      "rankingSince": "2026-08-14T10:00:00-05:00",
+      "logo": ""
     },
     {
       "id": "EMP-008",
@@ -121,13 +152,17 @@
       "ciudad": "Arequipa",
       "categoria": "Capacitación Minera",
       "descripcion": "Cursos y certificaciones para personal técnico y operativo del sector minero.",
-      "productos": ["Cursos técnicos", "Certificaciones"],
+      "productos": [
+        "Cursos técnicos",
+        "Certificaciones"
+      ],
       "website": "https://example.com",
       "whatsapp": "51900000008",
       "email": "contacto@capacitaminera.pe",
       "estado": "PUBLICADO",
       "rankingAmount": 0,
-      "rankingSince": "2026-08-15T10:00:00-05:00"
+      "rankingSince": "2026-08-15T10:00:00-05:00",
+      "logo": ""
     }
   ]
 }
