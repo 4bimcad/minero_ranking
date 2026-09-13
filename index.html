@@ -7,290 +7,172 @@
 <meta name="description" content="Ranking de visibilidad comercial de empresas del sector minero en América Latina.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            50: '#EEF4FF', 100: '#E0EBFF', 200: '#C2D8FF', 300: '#93BAFF',
+            400: '#5C93FF', 500: '#2E6DF5', 600: '#0B5FE0', 700: '#0A49B3',
+            800: '#0A3E96', 900: '#0B3376'
+          }
+        },
+        fontFamily: {
+          sans: ['Inter', 'sans-serif'],
+          display: ['"Barlow Condensed"', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
 <style>
-  :root{
-    --bg: #FFFFFF;
-    --bg-sunken: #F3F6FB;
-    --ink: #101317;
-    --stone: #3C4149;
-    --stone-dim: #6A6F78;
-    --line: #DDE3EC;
-    --blue: #0B5FE0;
-    --blue-dark: #0A3E96;
-    --blue-tint: #E9F1FE;
-    --blue-tint-border: #BFDBFE;
-    --grey-btn: #EEF1F5;
-    --grey-btn-ink: #1A1D22;
-    --radius: 12px;
-    --radius-pill: 999px;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--bg);
-    color:var(--ink);
-    font-family:'Inter', sans-serif;
-    line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
-  .display{font-family:'Barlow Condensed', sans-serif; font-weight:800;}
-  .mono{font-family:'IBM Plex Mono', monospace;}
-  a{color:inherit;}
-
-  /* ---- Header ---- */
-  header{
-    border-bottom:2px solid var(--line);
-    padding:44px 28px 34px;
-    background:var(--blue-tint);
-  }
-  .header-inner{max-width:1160px; margin:0 auto;}
-  .wordmark{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
-  .wordmark .brand{
-    font-size:clamp(38px, 6vw, 58px);
-    letter-spacing:0.005em;
-    line-height:1;
-    color:var(--ink);
-  }
-  .wordmark .brand .accent{color:var(--blue);}
-  .infoset-badge{
-    font-family:'Inter', sans-serif; font-size:13px; font-weight:700;
-    color:var(--blue-dark); background:#FFFFFF; border:1.5px solid var(--blue-tint-border);
-    padding:6px 14px; border-radius:var(--radius-pill); letter-spacing:0.02em;
-  }
-  .tagline{color:var(--stone); font-size:17px; margin-top:14px; max-width:600px; font-weight:500;}
-  .legal-strip{color:var(--stone-dim); font-size:12.5px; margin-top:18px; max-width:680px; line-height:1.6;}
-
-  /* ---- Controls ---- */
-  .controls{
-    max-width:1160px; margin:0 auto; padding:26px 28px 0;
-    display:flex; gap:12px; flex-wrap:wrap; align-items:center;
-  }
-  .search-wrap{position:relative; flex:1 1 260px; min-width:220px;}
-  .search-wrap i{
-    position:absolute; left:18px; top:50%; transform:translateY(-50%);
-    color:var(--stone-dim); font-size:15px;
-  }
-  input[type="search"]{
-    width:100%;
-    background:#FFFFFF;
-    border:2px solid var(--line);
-    color:var(--ink);
-    font-family:'Inter', sans-serif;
-    font-size:15px;
-    font-weight:500;
-    padding:14px 16px 14px 44px;
-    border-radius:var(--radius-pill);
-  }
-  select{
-    background:#FFFFFF;
-    border:2px solid var(--line);
-    color:var(--ink);
-    font-family:'Inter', sans-serif;
-    font-size:15px;
-    font-weight:500;
-    padding:14px 18px;
-    border-radius:var(--radius-pill);
-    flex:0 1 190px;
-    cursor:pointer;
-  }
-  input[type="search"]::placeholder{color:var(--stone-dim);}
-  input[type="search"]:focus, select:focus{outline:2px solid var(--blue); outline-offset:1px;}
-
-  .count-line{
-    max-width:1160px; margin:18px auto 0; padding:0 28px;
-    color:var(--stone-dim); font-size:13.5px; font-weight:600;
-    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
-  }
-
-  /* ---- Ranking list ---- */
-  main{max-width:1160px; margin:0 auto; padding:18px 28px 90px;}
-
-  .row{
-    display:grid;
-    grid-template-columns: 64px 72px 1fr auto;
-    gap:20px;
-    align-items:center;
-    padding:22px 20px;
-    border:2px solid var(--line);
-    border-radius:var(--radius);
-    margin-bottom:12px;
-    cursor:pointer;
-    transition:border-color .12s ease, transform .12s ease;
-    background:#FFFFFF;
-  }
-  .row:hover{border-color:var(--blue); transform:translateY(-1px);}
-  .row.top25{background:var(--blue-tint); border-color:var(--blue-tint-border);}
-  .row.free{background:var(--bg-sunken);}
-
-  .pos{
-    font-size:32px; font-weight:700; color:var(--stone); text-align:center;
-    font-variant-numeric:tabular-nums;
-  }
-  .row.top25 .pos{color:var(--blue);}
-
-  .logo-box{
-    width:64px; height:64px; border-radius:14px;
-    background:#FFFFFF; border:2px solid var(--line);
-    display:flex; align-items:center; justify-content:center;
-    color:var(--stone-dim); font-size:24px;
+  body{ background:#FFFDF9; }
+  .no-scrollbar::-webkit-scrollbar{ display:none; }
+  .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+  .desc-clamp{
+    display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical;
     overflow:hidden;
-  }
-  .row.top25 .logo-box{border-color:var(--blue-tint-border);}
-  .logo-box img{width:100%; height:100%; object-fit:cover;}
-
-  .info .name{font-size:21px; font-weight:700; color:var(--ink);}
-  .info .meta{
-    color:var(--stone); font-size:14.5px; margin-top:4px; font-weight:600;
-    display:flex; gap:10px; flex-wrap:wrap;
-  }
-  .info .meta span{white-space:nowrap;}
-  .dot::before{content:"·"; margin-right:10px; color:var(--stone-dim);}
-  .info .desc{
-    color:var(--stone); font-size:14.5px; margin-top:8px; max-width:60ch;
-    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
-    overflow:hidden; font-weight:500;
-  }
-
-  .amount-block{text-align:right;}
-  .amount{font-size:20px; color:var(--ink); font-weight:700;}
-  .amount.zero{color:var(--stone-dim); font-weight:600;}
-  .amount-label{font-size:12px; color:var(--stone-dim); margin-top:3px; font-weight:600;}
-
-  .empty{text-align:center; padding:70px 20px; color:var(--stone); font-size:16px;}
-
-  /* ---- Modal ---- */
-  .overlay{
-    position:fixed; inset:0; background:rgba(16,19,23,0.55);
-    display:none; align-items:flex-start; justify-content:center;
-    padding:40px 20px; z-index:50; overflow-y:auto;
-  }
-  .overlay.open{display:flex;}
-  .modal{
-    background:#FFFFFF;
-    border:2px solid var(--line);
-    max-width:600px; width:100%;
-    border-radius:20px;
-    padding:36px;
-    position:relative;
-    box-shadow:0 24px 70px rgba(16,19,23,0.18);
-  }
-  .modal-close{
-    position:absolute; top:18px; right:18px;
-    background:var(--grey-btn); border:none; color:var(--ink);
-    width:36px; height:36px; border-radius:50%;
-    font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center;
-  }
-  .modal-close:hover{background:var(--line);}
-
-  .modal-head{display:flex; gap:18px; align-items:center; margin-bottom:20px;}
-  .modal-logo{
-    width:80px; height:80px; border-radius:16px;
-    background:var(--bg-sunken); border:2px solid var(--line);
-    display:flex; align-items:center; justify-content:center;
-    color:var(--stone-dim); font-size:30px; flex-shrink:0; overflow:hidden;
-  }
-  .modal-logo img{width:100%; height:100%; object-fit:cover;}
-
-  .modal .pos-badge{
-    display:inline-flex; align-items:center; gap:6px;
-    color:var(--blue-dark); font-size:13.5px; font-weight:700;
-    background:var(--blue-tint); padding:5px 12px; border-radius:var(--radius-pill);
-    margin-bottom:8px;
-  }
-  .modal h2{
-    font-family:'Barlow Condensed', sans-serif; font-weight:800;
-    font-size:32px; margin:0; color:var(--ink); line-height:1.1;
-  }
-  .modal .modal-meta{color:var(--stone); font-size:14.5px; margin-top:4px; font-weight:600;}
-  .modal .desc{font-size:15.5px; color:var(--ink); margin-bottom:20px; font-weight:500; line-height:1.6;}
-  .modal .prod-list{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:26px;}
-  .prod-tag{
-    border:2px solid var(--line); color:var(--stone);
-    font-size:13px; font-weight:600; padding:6px 12px; border-radius:20px;
-    background:var(--bg-sunken);
-  }
-
-  .modal-actions{display:flex; gap:10px; flex-wrap:wrap;}
-  .btn{
-    font-family:'Inter', sans-serif; font-size:14.5px; font-weight:700;
-    padding:13px 20px; border-radius:var(--radius-pill); text-decoration:none;
-    border:2px solid transparent;
-    display:inline-flex; align-items:center; gap:8px;
-  }
-  .btn-contact{background:var(--blue); color:#FFFFFF;}
-  .btn-contact:hover{background:var(--blue-dark);}
-  .btn-upgrade{background:var(--grey-btn); color:var(--grey-btn-ink);}
-  .btn-upgrade:hover{background:var(--line);}
-
-  footer{
-    max-width:1160px; margin:0 auto; padding:28px 28px 70px;
-    color:var(--stone-dim); font-size:13px; border-top:2px solid var(--line);
-    font-weight:600;
-  }
-
-  @media (max-width:620px){
-    .row{grid-template-columns:44px 52px 1fr; row-gap:8px;}
-    .amount-block{grid-column:2 / span 2; text-align:left;}
-    .pos{font-size:24px;}
-    .logo-box{width:52px; height:52px;}
   }
 </style>
 </head>
-<body>
+<body class="text-gray-900">
 
-<header>
-  <div class="header-inner">
-    <div class="wordmark">
-      <span class="brand display">MINERO<span class="accent">RANKING</span></span>
-      <span class="infoset-badge">UN SERVICIO DE INFOSET</span>
+<!-- Top bar -->
+<div class="border-b border-gray-200 bg-white">
+  <div class="max-w-[1040px] mx-auto px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-xl bg-brand-600 flex items-center justify-center">
+        <i class="fa-solid fa-mountain text-white text-sm"></i>
+      </div>
+      <span class="font-display font-extrabold text-xl tracking-tight">minero<span class="text-brand-600">ranking</span></span>
+      <span class="hidden sm:flex items-center gap-1.5 text-xs text-gray-500 ml-2 border-l border-gray-200 pl-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+        Un servicio de INFOSET
+      </span>
     </div>
-    <p class="tagline">El ranking de visibilidad comercial de la minería latinoamericana. Un lugar, una tarifa, visibilidad permanente.</p>
-    <p class="legal-strip">La posición en MINERO RANKING representa el nivel de visibilidad comercial contratado dentro de la plataforma y no constituye una evaluación técnica, certificación, recomendación, garantía de calidad, solvencia, seguridad o desempeño de la empresa.</p>
+    <div class="flex items-center gap-5 text-sm font-semibold text-gray-500">
+      <a href="#ranking" class="hover:text-gray-900">Ranking</a>
+      <a href="#categorias" class="hover:text-gray-900">Categorías</a>
+      <a href="#registrar" class="hover:text-gray-900">Registrar empresa</a>
+      <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+    </div>
   </div>
-</header>
 
-<div class="controls">
-  <div class="search-wrap">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="search" id="searchInput" placeholder="Buscar empresa...">
+  <!-- Category pill nav -->
+  <div class="max-w-[1040px] mx-auto px-5 pb-4 flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryPillBar">
+    <!-- filled by JS -->
   </div>
-  <select id="paisFilter"><option value="">País: todos</option></select>
-  <select id="catFilter"><option value="">Categoría: todas</option></select>
 </div>
-<div class="count-line">
+
+<!-- Hero: claim-style stepper -->
+<div class="max-w-[1040px] mx-auto px-5 pt-10 pb-8 text-center">
+  <div class="inline-flex items-center gap-2 bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1.5 rounded-full mb-5">
+    <span class="w-1.5 h-1.5 rounded-full bg-brand-600"></span>
+    <span id="empresaCountLabel">Cargando empresas…</span>
+  </div>
+
+  <h1 class="font-display font-extrabold text-4xl sm:text-5xl leading-none tracking-tight text-gray-900">
+    Alcanza el puesto
+    <span id="heroPos" class="text-brand-600">#1</span>
+    por
+    <button id="minusBtn" class="align-middle inline-flex w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 items-center justify-center text-gray-500 text-lg mx-1">–</button>
+    <span id="heroAmount" class="text-brand-600">S/300</span>
+    <button id="plusBtn" class="align-middle inline-flex w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 items-center justify-center text-gray-500 text-lg mx-1">+</button>
+  </h1>
+  <p class="text-gray-500 mt-3 max-w-lg mx-auto">Una tarifa, visibilidad permanente. La posición sube o baja según cuánto invierta cada empresa en visibilidad comercial.</p>
+
+  <div class="mt-7 flex flex-col sm:flex-row items-center gap-2.5 max-w-xl mx-auto">
+    <div class="relative flex-1 w-full">
+      <i class="fa-solid fa-building absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+      <input id="empresaNombreInput" type="text" placeholder="Nombre de tu empresa"
+        class="w-full pl-11 pr-4 py-3.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium">
+    </div>
+    <select id="heroCategorySelect" class="w-full sm:w-auto px-4 py-3.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium text-gray-600">
+      <option value="">Categoría</option>
+    </select>
+    <button id="claimBtn" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold whitespace-nowrap">
+      Reclamar posición
+    </button>
+  </div>
+
+  <p class="text-xs text-gray-400 mt-4 max-w-lg mx-auto leading-relaxed">
+    La posición en MINERO RANKING representa el nivel de visibilidad comercial contratado y no constituye una evaluación técnica, certificación ni garantía de calidad de la empresa.
+  </p>
+</div>
+
+<!-- Filters row -->
+<div class="max-w-[1040px] mx-auto px-5 pb-3 flex items-center gap-2.5 flex-wrap" id="ranking">
+  <div class="relative flex-1 min-w-[200px]">
+    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+    <input id="searchInput" type="search" placeholder="Buscar empresa..."
+      class="w-full pl-10 pr-4 py-2.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium">
+  </div>
+  <select id="paisFilter" class="px-4 py-2.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium text-gray-600">
+    <option value="">País: todos</option>
+  </select>
+  <select id="catFilter" class="px-4 py-2.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium text-gray-600">
+    <option value="">Categoría: todas</option>
+  </select>
+  <div class="flex items-center bg-gray-100 rounded-full p-1 text-sm font-bold">
+    <button id="viewAll" class="px-4 py-1.5 rounded-full bg-brand-600 text-white">Todos</button>
+    <button id="viewTop25" class="px-4 py-1.5 rounded-full text-gray-500">Top 25</button>
+  </div>
+</div>
+<div class="max-w-[1040px] mx-auto px-5 pb-1 text-xs font-semibold text-gray-400 flex justify-between">
   <span id="countLabel">Cargando ranking…</span>
   <span id="updatedLabel"></span>
 </div>
 
-<main>
-  <div id="listContainer"></div>
+<!-- Ranking list -->
+<main class="max-w-[1040px] mx-auto px-5 pb-24 pt-4">
+  <div id="listContainer" class="space-y-2.5"></div>
 </main>
 
-<footer>
+<footer class="max-w-[1040px] mx-auto px-5 py-8 border-t border-gray-200 text-xs font-semibold text-gray-400">
   MINERO RANKING · mineroranking.infoset.org.pe · Un servicio de INFOSET
 </footer>
 
-<div class="overlay" id="overlay">
-  <div class="modal" id="modalContent"></div>
+<!-- Modal -->
+<div id="overlay" class="fixed inset-0 bg-gray-900/50 hidden items-start justify-center p-5 sm:p-10 z-50 overflow-y-auto">
+  <div id="modalContent" class="bg-white rounded-3xl max-w-lg w-full p-8 relative shadow-2xl"></div>
 </div>
 
 <script>
 const DATA_URL = './data/ranking.json';
 const WHATSAPP_ADMIN = '51900000000'; // TODO: reemplazar por el WhatsApp real de INFOSET
+const STEP = 10;
+
+const CATEGORY_ICONS = {
+  'Equipos y Maquinaria': 'fa-gears',
+  'Perforación y Voladura': 'fa-mountain',
+  'Insumos y Reactivos': 'fa-flask',
+  'Laboratorios y Análisis': 'fa-microscope',
+  'Servicios Mineros': 'fa-helmet-safety',
+  'Consultoría y Medio Ambiente': 'fa-leaf',
+  'Transporte y Logística': 'fa-truck',
+  'Seguridad y EPP': 'fa-hard-hat',
+  'Capacitación Minera': 'fa-graduation-cap',
+  'Otros': 'fa-ellipsis'
+};
+function catIcon(cat){ return CATEGORY_ICONS[cat] || 'fa-tag'; }
 
 let empresas = [];
+let currentView = 'all'; // 'all' | 'top25'
+let heroAmount = 300;
 
-function fmtMonto(n){
-  if(n === 0) return 'S/0';
-  return 'S/' + n.toLocaleString('es-PE');
-}
+function fmtMonto(n){ return n === 0 ? 'S/0' : 'S/' + n.toLocaleString('es-PE'); }
 
-function fmtFecha(iso){
+function diasDesde(iso){
   try{
     const d = new Date(iso);
-    return d.toLocaleDateString('es-PE', {day:'2-digit', month:'short', year:'numeric'});
+    const days = Math.max(0, Math.floor((Date.now() - d.getTime()) / 86400000));
+    if(days === 0) return 'hoy';
+    if(days === 1) return 'hace 1 día';
+    return `hace ${days} días`;
   }catch(e){ return ''; }
 }
 
@@ -301,32 +183,86 @@ function sortEmpresas(list){
   });
 }
 
-// Placeholder de logo: icono genérico hasta que la empresa suba el suyo.
-// Cuando tengas el logo real (recomendado 256x256 o 128x128), pon la URL
-// en el campo "logo" del JSON y esta función lo usará automáticamente.
 function logoHtml(e){
-  if(e.logo){
-    return `<img src="${e.logo}" alt="${e.empresa}">`;
-  }
-  return `<i class="fa-solid fa-industry"></i>`;
+  if(e.logo) return `<img src="${e.logo}" alt="${e.empresa}" class="w-full h-full object-cover rounded-2xl">`;
+  return `<i class="fa-solid ${catIcon(e.categoria)} text-lg"></i>`;
 }
 
 function populateFilters(list){
   const paisSel = document.getElementById('paisFilter');
   const catSel = document.getElementById('catFilter');
+  const heroCatSel = document.getElementById('heroCategorySelect');
   const paises = [...new Set(list.map(e=>e.pais))].sort();
   const cats = [...new Set(list.map(e=>e.categoria))].sort();
+
   paises.forEach(p=>{
-    const o = document.createElement('option');
-    o.value = p; o.textContent = p;
+    const o = document.createElement('option'); o.value = p; o.textContent = p;
     paisSel.appendChild(o);
   });
   cats.forEach(c=>{
-    const o = document.createElement('option');
-    o.value = c; o.textContent = c;
-    catSel.appendChild(o);
+    const o1 = document.createElement('option'); o1.value = c; o1.textContent = c;
+    catSel.appendChild(o1);
+    const o2 = document.createElement('option'); o2.value = c; o2.textContent = c;
+    heroCatSel.appendChild(o2);
+  });
+
+  const pillBar = document.getElementById('categoryPillBar');
+  pillBar.innerHTML = `<button data-cat="" class="cat-pill shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-600 text-white text-xs font-bold"><i class="fa-solid fa-grip"></i> Todas</button>` +
+    cats.map(c => `
+      <button data-cat="${c}" class="cat-pill shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold whitespace-nowrap">
+        <i class="fa-solid ${catIcon(c)}"></i> ${c}
+      </button>
+    `).join('');
+
+  pillBar.querySelectorAll('.cat-pill').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      pillBar.querySelectorAll('.cat-pill').forEach(b=>{
+        b.classList.remove('bg-brand-600','text-white');
+        b.classList.add('bg-gray-100','text-gray-600');
+      });
+      btn.classList.remove('bg-gray-100','text-gray-600');
+      btn.classList.add('bg-brand-600','text-white');
+      document.getElementById('catFilter').value = btn.dataset.cat;
+      render();
+    });
   });
 }
+
+function updateHero(){
+  const sorted = sortEmpresas(empresas);
+  let pos = 1;
+  for(const e of sorted){ if(e.rankingAmount >= heroAmount) pos++; else break; }
+  document.getElementById('heroPos').textContent = '#' + pos;
+  document.getElementById('heroAmount').textContent = fmtMonto(heroAmount);
+}
+
+document.getElementById('minusBtn').addEventListener('click', ()=>{
+  heroAmount = Math.max(0, heroAmount - STEP);
+  updateHero();
+});
+document.getElementById('plusBtn').addEventListener('click', ()=>{
+  heroAmount += STEP;
+  updateHero();
+});
+document.getElementById('claimBtn').addEventListener('click', ()=>{
+  const nombre = document.getElementById('empresaNombreInput').value.trim() || 'mi empresa';
+  const cat = document.getElementById('heroCategorySelect').value || 'sin categoría';
+  const msg = encodeURIComponent(`Hola, quiero registrar a ${nombre} (${cat}) en MINERO RANKING con S/${heroAmount} de visibilidad.`);
+  window.open(`https://wa.me/${WHATSAPP_ADMIN}?text=${msg}`, '_blank');
+});
+
+document.getElementById('viewAll').addEventListener('click', ()=>{
+  currentView = 'all';
+  document.getElementById('viewAll').className = 'px-4 py-1.5 rounded-full bg-brand-600 text-white';
+  document.getElementById('viewTop25').className = 'px-4 py-1.5 rounded-full text-gray-500';
+  render();
+});
+document.getElementById('viewTop25').addEventListener('click', ()=>{
+  currentView = 'top25';
+  document.getElementById('viewTop25').className = 'px-4 py-1.5 rounded-full bg-brand-600 text-white';
+  document.getElementById('viewAll').className = 'px-4 py-1.5 rounded-full text-gray-500';
+  render();
+});
 
 function render(){
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
@@ -341,12 +277,13 @@ function render(){
   });
 
   filtered = sortEmpresas(filtered);
+  if(currentView === 'top25') filtered = filtered.slice(0, 25);
 
   const container = document.getElementById('listContainer');
   const countLabel = document.getElementById('countLabel');
 
   if(filtered.length === 0){
-    container.innerHTML = '<div class="empty">Ninguna empresa coincide con tu búsqueda.</div>';
+    container.innerHTML = '<div class="text-center py-16 text-gray-400">Ninguna empresa coincide con tu búsqueda.</div>';
     countLabel.textContent = '0 empresas';
     return;
   }
@@ -358,26 +295,34 @@ function render(){
     const isTop25 = pos <= 25;
     const isFree = e.rankingAmount === 0;
     return `
-      <div class="row ${isTop25 ? 'top25' : ''} ${isFree ? 'free' : ''}" data-id="${e.id}">
-        <div class="pos mono">${pos}</div>
-        <div class="logo-box">${logoHtml(e)}</div>
-        <div class="info">
-          <div class="name">${e.empresa}</div>
-          <div class="meta">
-            <span><i class="fa-solid fa-location-dot"></i> ${e.ciudad}, ${e.pais}</span>
-            <span class="dot">${e.categoria}</span>
-          </div>
-          ${e.descripcion ? `<div class="desc">${e.descripcion}</div>` : ''}
+      <div data-id="${e.id}"
+        class="row-card cursor-pointer rounded-2xl border-2 ${isTop25 ? 'bg-brand-50 border-brand-100' : 'bg-white border-gray-200'} hover:border-brand-400 transition-colors p-4 flex items-center gap-4">
+        <div class="w-9 text-center font-display font-extrabold text-2xl ${isTop25 ? 'text-brand-600' : 'text-gray-400'}">${pos}</div>
+        <div class="w-14 h-14 shrink-0 rounded-2xl bg-white border-2 ${isTop25 ? 'border-brand-200' : 'border-gray-200'} flex items-center justify-center text-gray-400 overflow-hidden">
+          ${logoHtml(e)}
         </div>
-        <div class="amount-block">
-          <div class="amount mono ${isFree ? 'zero' : ''}">${fmtMonto(e.rankingAmount)}</div>
-          <div class="amount-label">${isFree ? 'registro gratuito' : 'visibilidad contratada'}</div>
+        <div class="flex-1 min-w-0">
+          <div class="font-bold text-base text-gray-900 truncate">${e.empresa}</div>
+          <div class="desc-clamp text-sm text-gray-500">${e.descripcion || ''}</div>
+          <div class="flex items-center gap-1.5 text-xs text-gray-400 mt-1 font-medium">
+            <i class="fa-solid ${catIcon(e.categoria)}"></i>
+            <span>${e.categoria}</span>
+            <span>·</span>
+            <span>${e.ciudad}, ${e.pais}</span>
+            <span>·</span>
+            <span>${diasDesde(e.rankingSince)}</span>
+            <span>·</span>
+            <span class="text-brand-600 font-semibold">ver detalles</span>
+          </div>
+        </div>
+        <div class="text-right shrink-0">
+          <div class="font-extrabold text-lg ${isFree ? 'text-gray-400' : 'text-brand-600'}">${fmtMonto(e.rankingAmount)}</div>
         </div>
       </div>
     `;
   }).join('');
 
-  container.querySelectorAll('.row').forEach(row=>{
+  container.querySelectorAll('.row-card').forEach(row=>{
     row.addEventListener('click', ()=> openModal(row.dataset.id));
   });
 }
@@ -386,41 +331,50 @@ function openModal(id){
   const e = empresas.find(x=>x.id === id);
   if(!e) return;
   const pos = sortEmpresas(empresas).findIndex(x=>x.id === id) + 1;
-
   const waMsg = encodeURIComponent(`Hola, quiero mejorar la posición de ${e.empresa} en MINERO RANKING.`);
-  const modal = document.getElementById('modalContent');
-  modal.innerHTML = `
-    <button class="modal-close" id="closeBtn" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
-    <div class="modal-head">
-      <div class="modal-logo">${logoHtml(e)}</div>
+
+  document.getElementById('modalContent').innerHTML = `
+    <button id="closeBtn" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="flex items-center gap-4 mb-5">
+      <div class="w-20 h-20 rounded-2xl bg-gray-50 border-2 border-gray-200 flex items-center justify-center text-gray-400 text-2xl overflow-hidden">
+        ${logoHtml(e)}
+      </div>
       <div>
-        <div class="pos-badge mono"><i class="fa-solid fa-ranking-star"></i> POSICIÓN #${pos}</div>
-        <h2>${e.empresa}</h2>
-        <div class="modal-meta"><i class="fa-solid fa-location-dot"></i> ${e.ciudad}, ${e.pais} · ${e.categoria}</div>
+        <div class="inline-flex items-center gap-1.5 bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1 rounded-full mb-2">
+          <i class="fa-solid fa-ranking-star"></i> POSICIÓN #${pos}
+        </div>
+        <h2 class="font-display font-extrabold text-2xl leading-none">${e.empresa}</h2>
+        <div class="text-sm text-gray-500 font-medium mt-1">
+          <i class="fa-solid fa-location-dot"></i> ${e.ciudad}, ${e.pais} · ${e.categoria}
+        </div>
       </div>
     </div>
-    <p class="desc">${e.descripcion || ''}</p>
-    ${e.productos && e.productos.length ? `<div class="prod-list">${e.productos.map(p=>`<span class="prod-tag">${p}</span>`).join('')}</div>` : ''}
-    <div class="modal-actions">
-      ${e.website ? `<a class="btn btn-contact" href="${e.website}" target="_blank" rel="noopener"><i class="fa-solid fa-globe"></i> Sitio web</a>` : ''}
-      ${e.whatsapp ? `<a class="btn btn-contact" href="https://wa.me/${e.whatsapp}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ''}
-      <a class="btn btn-upgrade" href="https://wa.me/${WHATSAPP_ADMIN}?text=${waMsg}" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-trend-up"></i> Mejorar posición</a>
+    <p class="text-sm text-gray-700 mb-5 leading-relaxed">${e.descripcion || ''}</p>
+    ${e.productos && e.productos.length ? `
+      <div class="flex flex-wrap gap-2 mb-6">
+        ${e.productos.map(p=>`<span class="text-xs font-semibold text-gray-500 bg-gray-100 border border-gray-200 rounded-full px-3 py-1.5">${p}</span>`).join('')}
+      </div>` : ''}
+    <div class="flex flex-wrap gap-2.5">
+      ${e.website ? `<a href="${e.website}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold"><i class="fa-solid fa-globe"></i> Sitio web</a>` : ''}
+      ${e.whatsapp ? `<a href="https://wa.me/${e.whatsapp}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ''}
+      <a href="https://wa.me/${WHATSAPP_ADMIN}?text=${waMsg}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold"><i class="fa-solid fa-arrow-trend-up"></i> Mejorar posición</a>
     </div>
   `;
-  document.getElementById('overlay').classList.add('open');
+  document.getElementById('overlay').classList.remove('hidden');
+  document.getElementById('overlay').classList.add('flex');
   document.getElementById('closeBtn').addEventListener('click', closeModal);
 }
 
 function closeModal(){
-  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('overlay').classList.add('hidden');
+  document.getElementById('overlay').classList.remove('flex');
 }
-
 document.getElementById('overlay').addEventListener('click', (ev)=>{
   if(ev.target.id === 'overlay') closeModal();
 });
-document.addEventListener('keydown', (ev)=>{
-  if(ev.key === 'Escape') closeModal();
-});
+document.addEventListener('keydown', (ev)=>{ if(ev.key === 'Escape') closeModal(); });
 
 document.getElementById('searchInput').addEventListener('input', render);
 document.getElementById('paisFilter').addEventListener('change', render);
@@ -431,13 +385,17 @@ fetch(DATA_URL)
   .then(data=>{
     empresas = (data.empresas || []).filter(e=>e.estado === 'PUBLICADO');
     populateFilters(empresas);
-    document.getElementById('updatedLabel').textContent = data.updatedAt
-      ? 'Actualizado: ' + fmtFecha(data.updatedAt) : '';
+    document.getElementById('empresaCountLabel').textContent = `${empresas.length} empresas ya en el ranking`;
+    if(empresas.length){
+      const maxAmount = Math.max(...empresas.map(e=>e.rankingAmount));
+      heroAmount = maxAmount + STEP;
+    }
+    updateHero();
     render();
   })
   .catch(err=>{
     document.getElementById('listContainer').innerHTML =
-      '<div class="empty">No se pudo cargar el ranking. Intenta nuevamente más tarde.</div>';
+      '<div class="text-center py-16 text-gray-400">No se pudo cargar el ranking. Intenta nuevamente más tarde.</div>';
     console.error(err);
   });
 </script>
