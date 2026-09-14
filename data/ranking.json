@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-14T22:57:14.044Z",
+  "updatedAt": "2026-09-14T23:07:12.908Z",
   "empresas": [
     {
       "id": "MR-20260914164916-1",
@@ -11,8 +11,8 @@
       "categoria": "Empresas Mineras",
       "descripcion": "Actividad minera, capacitaciòn, consultorio.",
       "productos": [],
-      "logo": "https://drive.google.com/uc?export=view&id=1BYwdhJ7fBOfoC_ksASvmNfMlqH6nRczD",
-      "website": "incajata.org.pe",
+      "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260914164916-1.png",
+      "website": "https://incajata.org.pe",
       "whatsapp": "+51963299237",
       "email": "incajata@gmail.com",
       "estado": "PUBLICADO",
