@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2/dist/tabler-icons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
@@ -38,7 +38,7 @@
   .dropdown-panel{ display:none; }
   .dropdown.open .dropdown-panel{ display:block; }
   .dropdown.open .chevron{ transform:rotate(180deg); }
-  [class^="ti-"], [class*=" ti-"]{ font-weight:300; }
+  .stepper-btn{ line-height:1; }
 </style>
 </head>
 <body class="text-gray-900 font-sans">
@@ -48,7 +48,7 @@
   <div class="max-w-[1040px] mx-auto px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
     <div class="flex items-center gap-2.5">
       <div class="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center">
-        <i class="ti ti-trending-up text-white text-base"></i>
+        <i class="fa-regular fa-chart-bar text-white text-sm"></i>
       </div>
       <span class="font-helv font-bold text-xl tracking-tight">minero<span class="text-brand-600">ranking</span></span>
       <span class="hidden sm:inline-flex items-center gap-2 bg-green-50 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full ml-2">
@@ -73,16 +73,20 @@
     Alcanza el puesto
     <span id="heroPos" class="text-brand-600">#1</span>
     por
-    <button id="minusBtn" class="align-middle inline-flex w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 items-center justify-center text-gray-500 text-lg mx-1">–</button>
+    <button id="minusBtn" class="stepper-btn align-middle inline-flex w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 items-center justify-center text-gray-500 mx-1">
+      <i class="fa-solid fa-minus text-sm"></i>
+    </button>
     <span id="heroAmount" class="text-brand-600">S/300</span>
-    <button id="plusBtn" class="align-middle inline-flex w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 items-center justify-center text-gray-500 text-lg mx-1">+</button>
+    <button id="plusBtn" class="stepper-btn align-middle inline-flex w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 items-center justify-center text-gray-500 mx-1">
+      <i class="fa-solid fa-plus text-sm"></i>
+    </button>
   </h1>
   <div id="heroUsd" class="text-gray-400 text-sm font-normal mt-1"></div>
   <p class="text-gray-500 text-xs sm:text-sm mt-3 max-w-lg mx-auto font-normal">Una tarifa, visibilidad permanente. La posición sube o baja según cuánto invierta cada empresa en visibilidad comercial.</p>
 
   <div class="mt-7 flex flex-col sm:flex-row items-center gap-2.5 max-w-2xl mx-auto">
     <div class="relative flex-[2] w-full">
-      <i class="ti ti-building absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+      <i class="fa-regular fa-building absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
       <input id="empresaNombreInput" type="text" placeholder="Nombre de tu empresa"
         class="w-full pl-11 pr-4 py-3.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-normal">
     </div>
@@ -100,7 +104,7 @@
 </div>
 <div class="max-w-[1040px] mx-auto px-5 pb-3 flex items-center gap-2.5 flex-wrap" id="ranking">
   <div class="relative w-48">
-    <i class="ti ti-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
     <input id="searchInput" type="search" placeholder="Buscar..."
       class="w-full pl-9 pr-3 py-2 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-normal">
   </div>
@@ -136,29 +140,33 @@ const DATA_URL = './data/ranking.json';
 const WHATSAPP_ADMIN = '51900000000'; // TODO: reemplazar por el WhatsApp real de INFOSET
 const STEP = 10;
 const PAGE_SIZE = 50;
-const TOP_TINT_END = 25; // hasta qué posición se aplica el degradado azul
+const TOP_TINT_END = 25; // hasta qué posición se considera "top" para la paginación/divisor
 document.getElementById('contactosLink').href = `https://wa.me/${WHATSAPP_ADMIN}`;
 
+// Cada valor es una clase completa de Font Awesome Free.
+// Se usa "fa-regular" (contorno fino) donde el plan gratuito lo permite;
+// donde Font Awesome Free no incluye una versión regular de ese ícono
+// específico, se usa "fa-solid" para que el ícono siempre se vea.
 const CATEGORY_ICONS = {
-  'Empresas Mineras': 'ti-building-factory',
-  'Exploración Geológica': 'ti-map-2',
-  'Equipos y Maquinaria': 'ti-settings',
-  'Perforación y Voladura': 'ti-flame',
-  'Procesamiento y Beneficio de Minerales': 'ti-filter',
-  'Insumos y Reactivos': 'ti-flask',
-  'Laboratorios y Análisis': 'ti-microscope',
-  'Ingeniería y Consultoría': 'ti-compass',
-  'Construcción y Obras': 'ti-building-skyscraper',
-  'Servicios y Mantenimiento': 'ti-tool',
-  'Transporte y Logística': 'ti-truck',
-  'Seguridad, EPP y Protección Industrial': 'ti-helmet',
-  'Medio Ambiente y Gestión de Aguas': 'ti-droplet',
-  'Energía e Infraestructura Eléctrica': 'ti-bolt',
-  'Automatización y Tecnología': 'ti-cpu',
-  'Capacitación': 'ti-school'
+  'Empresas Mineras': 'fa-regular fa-building',
+  'Exploración Geológica': 'fa-regular fa-map',
+  'Equipos y Maquinaria': 'fa-solid fa-gears',
+  'Perforación y Voladura': 'fa-solid fa-explosion',
+  'Procesamiento y Beneficio de Minerales': 'fa-solid fa-filter',
+  'Insumos y Reactivos': 'fa-solid fa-flask',
+  'Laboratorios y Análisis': 'fa-solid fa-microscope',
+  'Ingeniería y Consultoría': 'fa-regular fa-compass',
+  'Construcción y Obras': 'fa-solid fa-building',
+  'Servicios y Mantenimiento': 'fa-solid fa-screwdriver-wrench',
+  'Transporte y Logística': 'fa-solid fa-truck',
+  'Seguridad, EPP y Protección Industrial': 'fa-regular fa-life-ring',
+  'Medio Ambiente y Gestión de Aguas': 'fa-solid fa-droplet',
+  'Energía e Infraestructura Eléctrica': 'fa-solid fa-bolt',
+  'Automatización y Tecnología': 'fa-regular fa-lightbulb',
+  'Capacitación': 'fa-solid fa-graduation-cap'
 };
 const CATEGORY_LIST = Object.keys(CATEGORY_ICONS);
-function catIcon(cat){ return CATEGORY_ICONS[cat] || 'ti-tag'; }
+function catIcon(cat){ return CATEGORY_ICONS[cat] || 'fa-solid fa-tag'; }
 
 // Códigos ISO de respaldo por si una empresa no trae "paisCodigo" en el JSON
 const COUNTRY_CODES = {
@@ -219,7 +227,7 @@ function sortEmpresas(list){
 
 function logoHtml(e){
   if(e.logo) return `<img src="${e.logo}" alt="${e.empresa}" class="w-full h-full object-cover rounded-2xl">`;
-  return `<i class="ti ${catIcon(e.categoria)} text-lg"></i>`;
+  return `<i class="${catIcon(e.categoria)} text-lg"></i>`;
 }
 
 /* ---------- Generic icon/flag dropdown ---------- */
@@ -228,7 +236,7 @@ function buildDropdown(containerId, {placeholder, items, onSelect}){
   root.innerHTML = `
     <button type="button" class="dd-btn w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-full border-2 border-gray-200 hover:border-gray-300 text-sm font-normal text-gray-600 bg-white">
       <span class="dd-label flex items-center gap-2 truncate">${placeholder}</span>
-      <i class="ti ti-chevron-down chevron text-xs text-gray-400 transition-transform"></i>
+      <i class="fa-solid fa-chevron-down chevron text-xs text-gray-400 transition-transform"></i>
     </button>
     <div class="dropdown-panel absolute z-20 mt-2 w-56 max-h-72 overflow-y-auto bg-white border-2 border-gray-200 rounded-2xl shadow-lg p-1.5"></div>
   `;
@@ -240,7 +248,7 @@ function buildDropdown(containerId, {placeholder, items, onSelect}){
     panel.innerHTML = items.map(it => `
       <button type="button" data-value="${it.value}"
         class="dd-item w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-gray-100 text-sm font-normal text-gray-700 text-left">
-        ${it.icon ? `<i class="ti ${it.icon} w-4 text-gray-400"></i>` : ''}
+        ${it.icon ? `<i class="${it.icon} w-4 text-gray-400"></i>` : ''}
         ${it.flagCode ? `${flagImgByCode(it.flagCode, 24)}` : ''}
         <span class="truncate">${it.label}</span>
       </button>
@@ -250,7 +258,7 @@ function buildDropdown(containerId, {placeholder, items, onSelect}){
         const val = el.dataset.value;
         const found = items.find(i => i.value === val);
         label.innerHTML = found.value === '' ? placeholder :
-          `${found.icon ? `<i class="ti ${found.icon} text-gray-400"></i>` : ''}${found.flagCode ? flagImgByCode(found.flagCode, 24) : ''}<span class="truncate">${found.label}</span>`;
+          `${found.icon ? `<i class="${found.icon} text-gray-400"></i>` : ''}${found.flagCode ? flagImgByCode(found.flagCode, 24) : ''}<span class="truncate">${found.label}</span>`;
         root.classList.remove('open');
         onSelect(val);
       });
@@ -314,11 +322,12 @@ document.getElementById('claimBtn').addEventListener('click', ()=>{
   window.open(`https://wa.me/${WHATSAPP_ADMIN}?text=${msg}`, '_blank');
 });
 
-/* Degradado de azul continuo: mas intenso en el puesto 1, se desvanece hacia blanco en el puesto 25 */
-function blueTintStyle(pos){
-  const t = Math.min(1, (pos - 1) / (TOP_TINT_END - 1));
-  const alpha = Math.max(0, 0.30 - t * 0.30);
-  return `background-color: rgba(11,95,224,${alpha.toFixed(3)});`;
+/* Solo los 3 primeros puestos llevan tinte azul (intensidad decreciente). Del 4 en adelante: blanco. */
+function podiumTint(pos){
+  if(pos === 1) return 'rgba(11,95,224,0.22)';
+  if(pos === 2) return 'rgba(11,95,224,0.12)';
+  if(pos === 3) return 'rgba(11,95,224,0.05)';
+  return '';
 }
 
 function render(){
@@ -360,22 +369,20 @@ function render(){
     const isFree = e.rankingAmount === 0;
     const claimAmount = e.rankingAmount + 1;
 
-    if(!dividerInserted && globalPos > TOP_TINT_END && pageStart + i > 0){
-      html += `<div class="flex items-center gap-3 py-3 text-xs font-semibold text-gray-400"><span class="flex-1 h-px bg-gray-200"></span>Posiciones ${TOP_TINT_END + 1}–${Math.min(50, filtered.length)}<span class="flex-1 h-px bg-gray-200"></span></div>`;
+    if(!dividerInserted && globalPos > 3 && pageStart + i > 0){
+      html += `<div class="flex items-center gap-3 py-3 text-xs font-semibold text-gray-400"><span class="flex-1 h-px bg-gray-200"></span>Posiciones 4–${Math.min(50, filtered.length)}<span class="flex-1 h-px bg-gray-200"></span></div>`;
       dividerInserted = true;
     }
 
-    let cardStyle = '';
-    if(globalPos <= TOP_TINT_END) cardStyle = blueTintStyle(globalPos);
-
-    const posColor = globalPos <= 3 ? 'text-brand-700' : (globalPos <= TOP_TINT_END ? 'text-brand-500' : 'text-gray-400');
-    const nameColor = globalPos <= 3 ? 'text-gray-900' : 'text-gray-800';
+    const cardStyle = podiumTint(globalPos) ? `background-color:${podiumTint(globalPos)};` : '';
+    const posColor = globalPos === 1 ? 'text-brand-700' : globalPos <= 3 ? 'text-brand-600' : 'text-gray-400';
+    const nameColor = 'text-gray-800';
     const descColor = globalPos === 1 ? 'text-gray-800 font-medium' : 'text-gray-500 font-normal';
     const amountColor = isFree ? 'text-gray-400' : 'text-brand-700';
 
     html += `
       <div data-id="${e.id}" style="${cardStyle}"
-        class="row-card group relative overflow-hidden cursor-pointer rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 flex items-center gap-4">
+        class="row-card group relative overflow-hidden cursor-pointer rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow p-4 flex items-center gap-4">
         <div class="w-10 text-center shrink-0">
           <span class="font-sans font-semibold text-2xl ${posColor}">#${globalPos}</span>
         </div>
@@ -385,11 +392,11 @@ function render(){
         <div class="flex-1 min-w-0">
           <div class="font-semibold text-base ${nameColor} truncate">${e.empresa}</div>
           <div class="desc-clamp text-sm ${descColor}">${e.descripcion || ''}</div>
-          <div class="flex items-center gap-1.5 text-xs text-gray-400 font-normal mt-1">
-            <i class="ti ${catIcon(e.categoria)}"></i>
+          <div class="flex items-center gap-1.5 text-xs text-gray-500 font-normal mt-1">
+            <i class="${catIcon(e.categoria)}"></i>
             <span>${e.categoria}</span>
             <span>·</span>
-            <span class="inline-flex items-center gap-1">${flagImg(e,24)} ${e.ciudad}, ${e.pais}</span>
+            <span class="inline-flex items-center gap-1">${flagImg(e,24)} ${e.pais}, ${e.ciudad}</span>
             <span>·</span>
             <span>${diasDesde(e.rankingSince)}</span>
             <span>·</span>
@@ -426,11 +433,11 @@ function render(){
   if(totalPages > 1){
     pagBar.innerHTML = `
       <button id="prevPage" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium text-gray-600 disabled:opacity-40" ${currentPage === 1 ? 'disabled' : ''}>
-        <i class="ti ti-chevron-left mr-1"></i> Anterior
+        <i class="fa-solid fa-chevron-left mr-1"></i> Anterior
       </button>
       <span class="text-sm font-medium text-gray-500">Página ${currentPage} de ${totalPages}</span>
       <button id="nextPage" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium text-gray-600 disabled:opacity-40" ${currentPage === totalPages ? 'disabled' : ''}>
-        Siguiente <i class="ti ti-chevron-right ml-1"></i>
+        Siguiente <i class="fa-solid fa-chevron-right ml-1"></i>
       </button>
     `;
     const prevBtn = document.getElementById('prevPage');
@@ -450,7 +457,7 @@ function openModal(id){
 
   document.getElementById('modalContent').innerHTML = `
     <button id="closeBtn" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
-      <i class="ti ti-x"></i>
+      <i class="fa-regular fa-circle-xmark"></i>
     </button>
     <div class="flex items-center gap-4 mb-5">
       <div class="w-20 h-20 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 text-2xl overflow-hidden">
@@ -458,20 +465,20 @@ function openModal(id){
       </div>
       <div>
         <div class="inline-flex items-center gap-1.5 bg-brand-50 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full mb-2">
-          <i class="ti ti-medal"></i> POSICIÓN #${pos}
+          <i class="fa-solid fa-medal"></i> POSICIÓN #${pos}
         </div>
         <h2 class="font-helv font-bold text-2xl leading-none">${e.empresa}</h2>
         <div class="text-sm text-gray-500 font-normal mt-1.5 flex items-center gap-1 flex-wrap">
-          <i class="ti ti-map-pin"></i> ${flagImg(e,24)} ${e.ciudad}, ${e.pais}
-          &nbsp;·&nbsp;<i class="ti ${catIcon(e.categoria)}"></i> ${e.categoria}
+          <i class="fa-solid fa-location-dot"></i> ${flagImg(e,24)} ${e.pais}, ${e.ciudad}
+          &nbsp;·&nbsp;<i class="${catIcon(e.categoria)}"></i> ${e.categoria}
         </div>
       </div>
     </div>
     <p class="text-sm text-gray-700 font-normal mb-5 leading-relaxed">${e.descripcion || ''}</p>
     <div class="flex flex-wrap gap-2.5">
-      ${e.website ? `<a href="${e.website}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold"><i class="ti ti-world"></i> Sitio web</a>` : ''}
-      ${e.whatsapp ? `<a href="https://wa.me/${e.whatsapp}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] hover:bg-[#1DA851] text-white text-sm font-semibold"><i class="ti ti-brand-whatsapp"></i> WhatsApp</a>` : ''}
-      <a href="https://wa.me/${WHATSAPP_ADMIN}?text=${waMsg}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-semibold"><i class="ti ti-trending-up"></i> Mejorar posición</a>
+      ${e.website ? `<a href="${e.website}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold"><i class="fa-solid fa-globe"></i> Sitio web</a>` : ''}
+      ${e.whatsapp ? `<a href="https://wa.me/${e.whatsapp}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] hover:bg-[#1DA851] text-white text-sm font-semibold"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ''}
+      <a href="https://wa.me/${WHATSAPP_ADMIN}?text=${waMsg}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-semibold"><i class="fa-solid fa-arrow-trend-up"></i> Mejorar posición</a>
     </div>
   `;
   document.getElementById('overlay').classList.remove('hidden');
