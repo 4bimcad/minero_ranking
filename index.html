@@ -265,6 +265,15 @@ function sortEmpresas(list){
   });
 }
 
+function absoluteUrl(url){
+  if(!url) return '';
+  url = String(url).trim();
+
+  if(/^http?:\/\//i.test(url)) return url;
+
+  return 'https://' + url.replace(/^\/+/, '');
+}
+
 function logoHtml(e, bgClass){
   if(e.logo) return `<img src="${e.logo}" alt="${e.empresa}" class="w-full h-full object-cover rounded-2xl">`;
   return `<i class="${catIcon(e.categoria)} text-lg"></i>`;
@@ -493,7 +502,7 @@ function openModal(id){
     </div>
     <p class="text-sm text-gray-700 font-normal mb-5 leading-relaxed">${e.descripcion || ''}</p>
     <div class="flex flex-wrap gap-2.5">
-      ${e.website ? `<a href="${e.website}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold"><i class="fa-solid fa-globe"></i> Sitio web</a>` : ''}
+      ${e.website ? `<a href="${absoluteUrl(e.website)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold"><i class="fa-solid fa-globe"></i> Sitio web</a>` : ''}
       ${e.whatsapp ? `<a href="https://wa.me/${e.whatsapp}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] hover:bg-[#1DA851] text-white text-sm font-semibold"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ''}
       <a href="https://wa.me/${WHATSAPP_ADMIN}?text=${waMsg}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-semibold"><i class="fa-solid fa-arrow-trend-up"></i> Mejorar posición</a>
     </div>
