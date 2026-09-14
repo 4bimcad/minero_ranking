@@ -29,7 +29,7 @@
       "slug": "andina-mining",
       "pais": "Chile",
       "ciudad": "Antofagasta",
-      "categoria": "Servicios Mineros",
+      "categoria": "Servicios y Mantenimiento",
       "descripcion": "Servicios integrales para faenas mineras en el norte de Chile.",
       "productos": [
         "Mantenimiento",
@@ -109,7 +109,7 @@
       "slug": "segurmin-epp",
       "pais": "Perú",
       "ciudad": "Arequipa",
-      "categoria": "Seguridad y EPP",
+      "categoria": "Seguridad, EPP y Protección Industrial",
       "descripcion": "Equipos de protección personal certificados para minería subterránea y tajo abierto.",
       "productos": [
         "Cascos",
@@ -150,7 +150,7 @@
       "slug": "capacita-minera",
       "pais": "Perú",
       "ciudad": "Arequipa",
-      "categoria": "Capacitación Minera",
+      "categoria": "Capacitación",
       "descripcion": "Cursos y certificaciones para personal técnico y operativo del sector minero.",
       "productos": [
         "Cursos técnicos",

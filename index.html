@@ -19,11 +19,15 @@
             50: '#EEF4FF', 100: '#E0EBFF', 200: '#C2D8FF', 300: '#93BAFF',
             400: '#5C93FF', 500: '#2E6DF5', 600: '#0B5FE0', 700: '#0A49B3',
             800: '#0A3E96', 900: '#0B3376'
-          }
+          },
+          gold: { 100: '#FEF3C7', 400: '#F5B301', 600: '#B8860B', 700: '#8A6508' },
+          silver: { 100: '#F1F2F4', 400: '#9CA3AF', 600: '#6B7280', 700: '#4B5563' },
+          bronze: { 100: '#FCE9DD', 400: '#C97A44', 600: '#9A5A30', 700: '#7A4626' }
         },
         fontFamily: {
           sans: ['Inter', 'sans-serif'],
-          display: ['"Barlow Condensed"', 'sans-serif']
+          display: ['"Barlow Condensed"', 'sans-serif'],
+          helv: ['Helvetica', 'Arial', 'sans-serif']
         }
       }
     }
@@ -31,12 +35,13 @@
 </script>
 <style>
   body{ background:#FFFDF9; }
-  .no-scrollbar::-webkit-scrollbar{ display:none; }
-  .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
   .desc-clamp{
     display:-webkit-box; -webkit-line-clamp:1; -webkit-box-orient:vertical;
     overflow:hidden;
   }
+  .dropdown-panel{ display:none; }
+  .dropdown.open .dropdown-panel{ display:block; }
+  .dropdown.open .chevron{ transform:rotate(180deg); }
 </style>
 </head>
 <body class="text-gray-900">
@@ -49,22 +54,18 @@
         <i class="fa-solid fa-mountain text-white text-sm"></i>
       </div>
       <span class="font-display font-extrabold text-xl tracking-tight">minero<span class="text-brand-600">ranking</span></span>
-      <span class="hidden sm:flex items-center gap-1.5 text-xs text-gray-500 ml-2 border-l border-gray-200 pl-3">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-        Un servicio de INFOSET
+      <span class="hidden sm:inline-flex items-center gap-2 bg-green-50 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full ml-2">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+        </span>
+        <span id="visitorCount">128</span> visitantes hoy
       </span>
     </div>
-    <div class="flex items-center gap-5 text-sm font-semibold text-gray-500">
-      <a href="#ranking" class="hover:text-gray-900">Ranking</a>
-      <a href="#categorias" class="hover:text-gray-900">Categorías</a>
-      <a href="#registrar" class="hover:text-gray-900">Registrar empresa</a>
-      <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
+    <div class="flex items-center gap-6 text-sm font-semibold text-gray-500">
+      <a href="sobre-el-ranking.html" class="hover:text-gray-900">Sobre el ranking</a>
+      <a href="reglas.html" class="hover:text-gray-900">Reglas</a>
     </div>
-  </div>
-
-  <!-- Category pill nav -->
-  <div class="max-w-[1040px] mx-auto px-5 pb-4 flex items-center gap-2 overflow-x-auto no-scrollbar" id="categoryPillBar">
-    <!-- filled by JS -->
   </div>
 </div>
 
@@ -75,7 +76,7 @@
     <span id="empresaCountLabel">Cargando empresas…</span>
   </div>
 
-  <h1 class="font-display font-extrabold text-4xl sm:text-5xl leading-none tracking-tight text-gray-900">
+  <h1 class="font-helv font-bold text-4xl sm:text-5xl leading-none tracking-tight text-gray-900">
     Alcanza el puesto
     <span id="heroPos" class="text-brand-600">#1</span>
     por
@@ -91,9 +92,7 @@
       <input id="empresaNombreInput" type="text" placeholder="Nombre de tu empresa"
         class="w-full pl-11 pr-4 py-3.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium">
     </div>
-    <select id="heroCategorySelect" class="w-full sm:w-auto px-4 py-3.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium text-gray-600">
-      <option value="">Categoría</option>
-    </select>
+    <div id="heroCategoryDropdown" class="dropdown relative w-full sm:w-auto"></div>
     <button id="claimBtn" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold whitespace-nowrap">
       Reclamar posición
     </button>
@@ -106,21 +105,13 @@
 
 <!-- Filters row -->
 <div class="max-w-[1040px] mx-auto px-5 pb-3 flex items-center gap-2.5 flex-wrap" id="ranking">
-  <div class="relative flex-1 min-w-[200px]">
+  <div class="relative w-full sm:w-64">
     <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
     <input id="searchInput" type="search" placeholder="Buscar empresa..."
       class="w-full pl-10 pr-4 py-2.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium">
   </div>
-  <select id="paisFilter" class="px-4 py-2.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium text-gray-600">
-    <option value="">País: todos</option>
-  </select>
-  <select id="catFilter" class="px-4 py-2.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium text-gray-600">
-    <option value="">Categoría: todas</option>
-  </select>
-  <div class="flex items-center bg-gray-100 rounded-full p-1 text-sm font-bold">
-    <button id="viewAll" class="px-4 py-1.5 rounded-full bg-brand-600 text-white">Todos</button>
-    <button id="viewTop25" class="px-4 py-1.5 rounded-full text-gray-500">Top 25</button>
-  </div>
+  <div id="paisDropdown" class="dropdown relative"></div>
+  <div id="catDropdown" class="dropdown relative"></div>
 </div>
 <div class="max-w-[1040px] mx-auto px-5 pb-1 text-xs font-semibold text-gray-400 flex justify-between">
   <span id="countLabel">Cargando ranking…</span>
@@ -128,12 +119,21 @@
 </div>
 
 <!-- Ranking list -->
-<main class="max-w-[1040px] mx-auto px-5 pb-24 pt-4">
+<main class="max-w-[1040px] mx-auto px-5 pb-10 pt-4">
   <div id="listContainer" class="space-y-2.5"></div>
+  <div id="paginationBar" class="flex items-center justify-center gap-3 mt-8"></div>
 </main>
 
 <footer class="max-w-[1040px] mx-auto px-5 py-8 border-t border-gray-200 text-xs font-semibold text-gray-400">
-  MINERO RANKING · mineroranking.infoset.org.pe · Un servicio de INFOSET
+  <div class="mb-2">MINERO RANKING · mineroranking.infoset.org.pe · Un servicio de INFOSET</div>
+  <div class="flex flex-wrap gap-x-2 gap-y-1">
+    <a href="reglas.html" class="hover:text-gray-700">Reglas</a><span>·</span>
+    <a href="preguntas-frecuentes.html" class="hover:text-gray-700">Preguntas frecuentes</a><span>·</span>
+    <a href="terminos.html" class="hover:text-gray-700">Términos</a><span>·</span>
+    <a href="privacidad.html" class="hover:text-gray-700">Privacidad</a><span>·</span>
+    <a href="aviso-legal.html" class="hover:text-gray-700">Aviso legal</a><span>·</span>
+    <a href="estadisticas.html" class="hover:text-gray-700">Estadísticas en vivo</a>
+  </div>
 </footer>
 
 <!-- Modal -->
@@ -145,24 +145,46 @@
 const DATA_URL = './data/ranking.json';
 const WHATSAPP_ADMIN = '51900000000'; // TODO: reemplazar por el WhatsApp real de INFOSET
 const STEP = 10;
+const PAGE_SIZE = 50;
+const TOP_TINT_END = 25; // hasta qué posición se aplica el degradado azul
 
 const CATEGORY_ICONS = {
+  'Empresas Mineras': 'fa-industry',
+  'Exploración Geológica': 'fa-map-location-dot',
   'Equipos y Maquinaria': 'fa-gears',
-  'Perforación y Voladura': 'fa-mountain',
+  'Perforación y Voladura': 'fa-explosion',
+  'Procesamiento y Beneficio de Minerales': 'fa-filter',
   'Insumos y Reactivos': 'fa-flask',
   'Laboratorios y Análisis': 'fa-microscope',
-  'Servicios Mineros': 'fa-helmet-safety',
-  'Consultoría y Medio Ambiente': 'fa-leaf',
+  'Ingeniería y Consultoría': 'fa-drafting-compass',
+  'Construcción y Obras': 'fa-building',
+  'Servicios y Mantenimiento': 'fa-screwdriver-wrench',
   'Transporte y Logística': 'fa-truck',
-  'Seguridad y EPP': 'fa-hard-hat',
-  'Capacitación Minera': 'fa-graduation-cap',
-  'Otros': 'fa-ellipsis'
+  'Seguridad, EPP y Protección Industrial': 'fa-hard-hat',
+  'Medio Ambiente y Gestión de Aguas': 'fa-droplet',
+  'Energía e Infraestructura Eléctrica': 'fa-bolt',
+  'Automatización y Tecnología': 'fa-microchip',
+  'Capacitación': 'fa-graduation-cap'
 };
+const CATEGORY_LIST = Object.keys(CATEGORY_ICONS);
 function catIcon(cat){ return CATEGORY_ICONS[cat] || 'fa-tag'; }
 
+const COUNTRY_FLAGS = {
+  'Perú': '🇵🇪', 'Chile': '🇨🇱', 'Colombia': '🇨🇴', 'Argentina': '🇦🇷',
+  'Bolivia': '🇧🇴', 'Ecuador': '🇪🇨', 'México': '🇲🇽', 'Brasil': '🇧🇷',
+  'Panamá': '🇵🇦', 'Estados Unidos': '🇺🇸'
+};
+function countryFlag(c){ return COUNTRY_FLAGS[c] || '🏳️'; }
+
 let empresas = [];
-let currentView = 'all'; // 'all' | 'top25'
 let heroAmount = 300;
+let currentPage = 1;
+let selectedPais = '';
+let selectedCat = '';
+let selectedHeroCat = '';
+
+// Contador de visitantes: placeholder hasta conectar analítica real (ej. datafa.st, Plausible, GA4)
+document.getElementById('visitorCount').textContent = Math.floor(80 + Math.random() * 150).toLocaleString('es-PE');
 
 function fmtMonto(n){ return n === 0 ? 'S/0' : 'S/' + n.toLocaleString('es-PE'); }
 
@@ -188,43 +210,71 @@ function logoHtml(e){
   return `<i class="fa-solid ${catIcon(e.categoria)} text-lg"></i>`;
 }
 
-function populateFilters(list){
-  const paisSel = document.getElementById('paisFilter');
-  const catSel = document.getElementById('catFilter');
-  const heroCatSel = document.getElementById('heroCategorySelect');
-  const paises = [...new Set(list.map(e=>e.pais))].sort();
-  const cats = [...new Set(list.map(e=>e.categoria))].sort();
+/* ---------- Generic icon/flag dropdown ---------- */
+function buildDropdown(containerId, {placeholder, items, onSelect}){
+  const root = document.getElementById(containerId);
+  root.innerHTML = `
+    <button type="button" class="dd-btn w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-full border-2 border-gray-200 hover:border-gray-300 text-sm font-medium text-gray-600 bg-white">
+      <span class="dd-label flex items-center gap-2 truncate">${placeholder}</span>
+      <i class="fa-solid fa-chevron-down chevron text-xs text-gray-400 transition-transform"></i>
+    </button>
+    <div class="dropdown-panel absolute z-20 mt-2 w-56 max-h-72 overflow-y-auto bg-white border-2 border-gray-200 rounded-2xl shadow-lg p-1.5"></div>
+  `;
+  const panel = root.querySelector('.dropdown-panel');
+  const label = root.querySelector('.dd-label');
+  const btn = root.querySelector('.dd-btn');
 
-  paises.forEach(p=>{
-    const o = document.createElement('option'); o.value = p; o.textContent = p;
-    paisSel.appendChild(o);
-  });
-  cats.forEach(c=>{
-    const o1 = document.createElement('option'); o1.value = c; o1.textContent = c;
-    catSel.appendChild(o1);
-    const o2 = document.createElement('option'); o2.value = c; o2.textContent = c;
-    heroCatSel.appendChild(o2);
-  });
-
-  const pillBar = document.getElementById('categoryPillBar');
-  pillBar.innerHTML = `<button data-cat="" class="cat-pill shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-600 text-white text-xs font-bold"><i class="fa-solid fa-grip"></i> Todas</button>` +
-    cats.map(c => `
-      <button data-cat="${c}" class="cat-pill shrink-0 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 text-xs font-bold whitespace-nowrap">
-        <i class="fa-solid ${catIcon(c)}"></i> ${c}
+  function renderItems(){
+    panel.innerHTML = items.map(it => `
+      <button type="button" data-value="${it.value}"
+        class="dd-item w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-gray-100 text-sm font-medium text-gray-700 text-left">
+        ${it.icon ? `<i class="fa-solid ${it.icon} w-4 text-gray-400"></i>` : ''}
+        ${it.flag ? `<span class="w-4">${it.flag}</span>` : ''}
+        <span class="truncate">${it.label}</span>
       </button>
     `).join('');
-
-  pillBar.querySelectorAll('.cat-pill').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      pillBar.querySelectorAll('.cat-pill').forEach(b=>{
-        b.classList.remove('bg-brand-600','text-white');
-        b.classList.add('bg-gray-100','text-gray-600');
+    panel.querySelectorAll('.dd-item').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const val = el.dataset.value;
+        const found = items.find(i => i.value === val);
+        label.innerHTML = found.value === '' ? placeholder :
+          `${found.icon ? `<i class="fa-solid ${found.icon} text-gray-400"></i>` : ''}${found.flag ? `<span>${found.flag}</span>` : ''}<span class="truncate">${found.label}</span>`;
+        root.classList.remove('open');
+        onSelect(val);
       });
-      btn.classList.remove('bg-gray-100','text-gray-600');
-      btn.classList.add('bg-brand-600','text-white');
-      document.getElementById('catFilter').value = btn.dataset.cat;
-      render();
     });
+  }
+  renderItems();
+
+  btn.addEventListener('click', (ev)=>{
+    ev.stopPropagation();
+    document.querySelectorAll('.dropdown.open').forEach(d=>{ if(d !== root) d.classList.remove('open'); });
+    root.classList.toggle('open');
+  });
+}
+document.addEventListener('click', ()=>{
+  document.querySelectorAll('.dropdown.open').forEach(d=>d.classList.remove('open'));
+});
+
+function populateFilters(list){
+  const paises = [...new Set(list.map(e=>e.pais))].sort();
+
+  buildDropdown('paisDropdown', {
+    placeholder: 'País: todos',
+    items: [{value:'', label:'Todos los países'}, ...paises.map(p=>({value:p, label:p, flag:countryFlag(p)}))],
+    onSelect: (v)=>{ selectedPais = v; currentPage = 1; render(); }
+  });
+
+  buildDropdown('catDropdown', {
+    placeholder: 'Categoría: todas',
+    items: [{value:'', label:'Todas las categorías'}, ...CATEGORY_LIST.map(c=>({value:c, label:c, icon:catIcon(c)}))],
+    onSelect: (v)=>{ selectedCat = v; currentPage = 1; render(); }
+  });
+
+  buildDropdown('heroCategoryDropdown', {
+    placeholder: 'Categoría',
+    items: [{value:'', label:'Elegir categoría'}, ...CATEGORY_LIST.map(c=>({value:c, label:c, icon:catIcon(c)}))],
+    onSelect: (v)=>{ selectedHeroCat = v; }
   });
 }
 
@@ -246,69 +296,105 @@ document.getElementById('plusBtn').addEventListener('click', ()=>{
 });
 document.getElementById('claimBtn').addEventListener('click', ()=>{
   const nombre = document.getElementById('empresaNombreInput').value.trim() || 'mi empresa';
-  const cat = document.getElementById('heroCategorySelect').value || 'sin categoría';
+  const cat = selectedHeroCat || 'sin categoría';
   const msg = encodeURIComponent(`Hola, quiero registrar a ${nombre} (${cat}) en MINERO RANKING con S/${heroAmount} de visibilidad.`);
   window.open(`https://wa.me/${WHATSAPP_ADMIN}?text=${msg}`, '_blank');
 });
 
-document.getElementById('viewAll').addEventListener('click', ()=>{
-  currentView = 'all';
-  document.getElementById('viewAll').className = 'px-4 py-1.5 rounded-full bg-brand-600 text-white';
-  document.getElementById('viewTop25').className = 'px-4 py-1.5 rounded-full text-gray-500';
-  render();
-});
-document.getElementById('viewTop25').addEventListener('click', ()=>{
-  currentView = 'top25';
-  document.getElementById('viewTop25').className = 'px-4 py-1.5 rounded-full bg-brand-600 text-white';
-  document.getElementById('viewAll').className = 'px-4 py-1.5 rounded-full text-gray-500';
-  render();
-});
+/* ---------- Podium styling helpers ---------- */
+function podiumClasses(pos){
+  if(pos === 1) return { card:'bg-gold-100 border-gold-400', posColor:'text-gold-700', amountColor:'text-gold-700', nameColor:'text-gray-900', descColor:'text-gray-800 font-semibold', metaColor:'text-gray-700 font-bold', medalIcon:'fa-trophy', medalColor:'text-gold-400' };
+  if(pos === 2) return { card:'bg-silver-100 border-silver-400', posColor:'text-silver-700', amountColor:'text-silver-700', nameColor:'text-gray-900', descColor:'text-gray-700 font-semibold', metaColor:'text-gray-600 font-bold', medalIcon:'fa-medal', medalColor:'text-silver-400' };
+  if(pos === 3) return { card:'bg-bronze-100 border-bronze-400', posColor:'text-bronze-700', amountColor:'text-bronze-700', nameColor:'text-gray-900', descColor:'text-gray-700 font-semibold', metaColor:'text-gray-600 font-bold', medalIcon:'fa-medal', medalColor:'text-bronze-400' };
+  return null;
+}
+
+function blueTintStyle(pos){
+  // Degradado de azul: mas intenso en el puesto 4, se desvanece hacia blanco en el puesto 25
+  const t = (pos - 4) / (TOP_TINT_END - 4);
+  const alpha = Math.max(0, 0.16 - t * 0.16);
+  return `background-color: rgba(11,95,224,${alpha.toFixed(3)});`;
+}
 
 function render(){
   const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  const pais = document.getElementById('paisFilter').value;
-  const cat = document.getElementById('catFilter').value;
 
   let filtered = empresas.filter(e=>{
-    if(pais && e.pais !== pais) return false;
-    if(cat && e.categoria !== cat) return false;
+    if(selectedPais && e.pais !== selectedPais) return false;
+    if(selectedCat && e.categoria !== selectedCat) return false;
     if(q && !e.empresa.toLowerCase().includes(q)) return false;
     return true;
   });
 
+  const fullSorted = sortEmpresas(empresas);
   filtered = sortEmpresas(filtered);
-  if(currentView === 'top25') filtered = filtered.slice(0, 25);
 
   const container = document.getElementById('listContainer');
   const countLabel = document.getElementById('countLabel');
+  const pagBar = document.getElementById('paginationBar');
 
   if(filtered.length === 0){
     container.innerHTML = '<div class="text-center py-16 text-gray-400">Ninguna empresa coincide con tu búsqueda.</div>';
     countLabel.textContent = '0 empresas';
+    pagBar.innerHTML = '';
     return;
   }
 
   countLabel.textContent = filtered.length + (filtered.length === 1 ? ' empresa' : ' empresas');
 
-  container.innerHTML = filtered.map((e, idx)=>{
-    const pos = idx + 1;
-    const isTop25 = pos <= 25;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  if(currentPage > totalPages) currentPage = totalPages;
+  const pageStart = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = filtered.slice(pageStart, pageStart + PAGE_SIZE);
+
+  let html = '';
+  let dividerInserted = false;
+
+  pageItems.forEach((e, i)=>{
+    const globalPos = fullSorted.findIndex(x => x.id === e.id) + 1;
     const isFree = e.rankingAmount === 0;
-    return `
-      <div data-id="${e.id}"
-        class="row-card cursor-pointer rounded-2xl border-2 ${isTop25 ? 'bg-brand-50 border-brand-100' : 'bg-white border-gray-200'} hover:border-brand-400 transition-colors p-4 flex items-center gap-4">
-        <div class="w-9 text-center font-display font-extrabold text-2xl ${isTop25 ? 'text-brand-600' : 'text-gray-400'}">${pos}</div>
-        <div class="w-14 h-14 shrink-0 rounded-2xl bg-white border-2 ${isTop25 ? 'border-brand-200' : 'border-gray-200'} flex items-center justify-center text-gray-400 overflow-hidden">
+    const podium = podiumClasses(globalPos);
+
+    if(!dividerInserted && globalPos > TOP_TINT_END && pageStart + i > 0){
+      html += `<div class="flex items-center gap-3 py-3 text-xs font-bold text-gray-400"><span class="flex-1 h-px bg-gray-200"></span>Posiciones ${TOP_TINT_END + 1}–${Math.min(50, filtered.length)}<span class="flex-1 h-px bg-gray-200"></span></div>`;
+      dividerInserted = true;
+    }
+
+    let cardStyle = '';
+    let cardClass = 'bg-white border-gray-200';
+    let posInner = `<span class="font-display font-extrabold text-2xl">#${globalPos}</span>`;
+    let nameClass = 'text-gray-900';
+    let descClass = 'text-gray-500';
+    let metaClass = 'text-gray-400';
+    let amountClass = isFree ? 'text-gray-400' : 'text-brand-600';
+
+    if(podium){
+      cardClass = `${podium.card} border-2`;
+      posInner = `<i class="fa-solid ${podium.medalIcon} ${podium.medalColor} text-xl block mb-0.5"></i><span class="font-display font-extrabold text-xl ${podium.posColor}">#${globalPos}</span>`;
+      nameClass = podium.nameColor;
+      descClass = podium.descColor;
+      metaClass = podium.metaColor;
+      amountClass = podium.amountColor + ' font-extrabold';
+    } else if(globalPos >= 4 && globalPos <= TOP_TINT_END){
+      cardStyle = blueTintStyle(globalPos);
+      cardClass = 'border-brand-100 border-2';
+    }
+
+    html += `
+      <div data-id="${e.id}" style="${cardStyle}"
+        class="row-card cursor-pointer rounded-2xl border-2 ${cardClass} hover:border-brand-400 transition-colors p-4 flex items-center gap-4">
+        <div class="w-12 text-center shrink-0">${posInner}</div>
+        <div class="w-14 h-14 shrink-0 rounded-2xl bg-white border-2 border-gray-200 flex items-center justify-center text-gray-400 overflow-hidden">
           ${logoHtml(e)}
         </div>
         <div class="flex-1 min-w-0">
-          <div class="font-bold text-base text-gray-900 truncate">${e.empresa}</div>
-          <div class="desc-clamp text-sm text-gray-500">${e.descripcion || ''}</div>
-          <div class="flex items-center gap-1.5 text-xs text-gray-400 mt-1 font-medium">
+          <div class="font-bold text-base ${nameClass} truncate">${e.empresa}</div>
+          <div class="desc-clamp text-sm ${descClass}">${e.descripcion || ''}</div>
+          <div class="flex items-center gap-1.5 text-xs ${metaClass} mt-1">
             <i class="fa-solid ${catIcon(e.categoria)}"></i>
             <span>${e.categoria}</span>
             <span>·</span>
-            <span>${e.ciudad}, ${e.pais}</span>
+            <span>${countryFlag(e.pais)} ${e.ciudad}, ${e.pais}</span>
             <span>·</span>
             <span>${diasDesde(e.rankingSince)}</span>
             <span>·</span>
@@ -316,15 +402,35 @@ function render(){
           </div>
         </div>
         <div class="text-right shrink-0">
-          <div class="font-extrabold text-lg ${isFree ? 'text-gray-400' : 'text-brand-600'}">${fmtMonto(e.rankingAmount)}</div>
+          <div class="font-extrabold text-lg ${amountClass}">${fmtMonto(e.rankingAmount)}</div>
         </div>
       </div>
     `;
-  }).join('');
+  });
 
+  container.innerHTML = html;
   container.querySelectorAll('.row-card').forEach(row=>{
     row.addEventListener('click', ()=> openModal(row.dataset.id));
   });
+
+  // Pagination bar
+  if(totalPages > 1){
+    pagBar.innerHTML = `
+      <button id="prevPage" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-bold text-gray-600 disabled:opacity-40" ${currentPage === 1 ? 'disabled' : ''}>
+        <i class="fa-solid fa-chevron-left mr-1"></i> Anterior
+      </button>
+      <span class="text-sm font-bold text-gray-500">Página ${currentPage} de ${totalPages}</span>
+      <button id="nextPage" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-bold text-gray-600 disabled:opacity-40" ${currentPage === totalPages ? 'disabled' : ''}>
+        Siguiente <i class="fa-solid fa-chevron-right ml-1"></i>
+      </button>
+    `;
+    const prevBtn = document.getElementById('prevPage');
+    const nextBtn = document.getElementById('nextPage');
+    if(prevBtn) prevBtn.addEventListener('click', ()=>{ if(currentPage > 1){ currentPage--; render(); window.scrollTo({top:0, behavior:'smooth'}); } });
+    if(nextBtn) nextBtn.addEventListener('click', ()=>{ if(currentPage < totalPages){ currentPage++; render(); window.scrollTo({top:0, behavior:'smooth'}); } });
+  } else {
+    pagBar.innerHTML = '';
+  }
 }
 
 function openModal(id){
@@ -345,20 +451,17 @@ function openModal(id){
         <div class="inline-flex items-center gap-1.5 bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1 rounded-full mb-2">
           <i class="fa-solid fa-ranking-star"></i> POSICIÓN #${pos}
         </div>
-        <h2 class="font-display font-extrabold text-2xl leading-none">${e.empresa}</h2>
-        <div class="text-sm text-gray-500 font-medium mt-1">
-          <i class="fa-solid fa-location-dot"></i> ${e.ciudad}, ${e.pais} · ${e.categoria}
+        <h2 class="font-helv font-bold text-2xl leading-none">${e.empresa}</h2>
+        <div class="text-sm text-gray-500 font-medium mt-1.5">
+          <i class="fa-solid fa-location-dot"></i> ${countryFlag(e.pais)} ${e.ciudad}, ${e.pais}
+          &nbsp;·&nbsp;<i class="fa-solid ${catIcon(e.categoria)}"></i> ${e.categoria}
         </div>
       </div>
     </div>
     <p class="text-sm text-gray-700 mb-5 leading-relaxed">${e.descripcion || ''}</p>
-    ${e.productos && e.productos.length ? `
-      <div class="flex flex-wrap gap-2 mb-6">
-        ${e.productos.map(p=>`<span class="text-xs font-semibold text-gray-500 bg-gray-100 border border-gray-200 rounded-full px-3 py-1.5">${p}</span>`).join('')}
-      </div>` : ''}
     <div class="flex flex-wrap gap-2.5">
       ${e.website ? `<a href="${e.website}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold"><i class="fa-solid fa-globe"></i> Sitio web</a>` : ''}
-      ${e.whatsapp ? `<a href="https://wa.me/${e.whatsapp}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>` : ''}
+      ${e.whatsapp ? `<a href="https://wa.me/${e.whatsapp}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] hover:bg-[#1DA851] text-white text-sm font-bold"><i class="fa-brands fa-whatsapp text-base"></i> WhatsApp</a>` : ''}
       <a href="https://wa.me/${WHATSAPP_ADMIN}?text=${waMsg}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold"><i class="fa-solid fa-arrow-trend-up"></i> Mejorar posición</a>
     </div>
   `;
@@ -376,9 +479,7 @@ document.getElementById('overlay').addEventListener('click', (ev)=>{
 });
 document.addEventListener('keydown', (ev)=>{ if(ev.key === 'Escape') closeModal(); });
 
-document.getElementById('searchInput').addEventListener('input', render);
-document.getElementById('paisFilter').addEventListener('change', render);
-document.getElementById('catFilter').addEventListener('change', render);
+document.getElementById('searchInput').addEventListener('input', ()=>{ currentPage = 1; render(); });
 
 fetch(DATA_URL)
   .then(r=>r.json())
