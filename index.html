@@ -274,9 +274,18 @@ function absoluteUrl(url){
   return 'https://' + url.replace(/^\/+/, '');
 }
 
-function logoHtml(e, bgClass){
-  if(e.logo) return `<img src="${e.logo}" alt="${e.empresa}" class="w-full h-full object-cover rounded-2xl">`;
-  return `<i class="${catIcon(e.categoria)} text-lg"></i>`;
+function logoHtml(e){
+  if (!e.logo) {
+    return `<i class="${catIcon(e.categoria)} text-lg"></i>`;
+  }
+
+  return `
+    <img
+      src="${e.logo}"
+      alt="${e.empresa || ''}"
+      style="width:100%;height:100%;object-fit:cover;border-radius:16px;display:block;"
+    >
+  `;
 }
 
 /* ---------- Generic icon dropdown (solo se usa para la categoría junto a Reclamar posición) ---------- */
