@@ -390,8 +390,8 @@ function render(){
     html += `
       <div data-id="${e.id}" style="${cardStyle}"
         class="row-card group relative overflow-hidden cursor-pointer rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow p-4 flex items-center gap-4">
-        <div class="w-10 text-center shrink-0">
-          <span class="font-sans font-semibold text-2xl ${posColor}">#${globalPos}</span>
+        <div class="w-14 text-center shrink-0">
+          <span class="font-sans font-semibold text-2xl whitespace-nowrap ${posColor}">#${globalPos}</span>
         </div>
         <div class="w-14 h-14 shrink-0 rounded-2xl bg-white border border-gray-200/70 flex items-center justify-center text-gray-400 overflow-hidden">
           ${logoHtml(e)}
