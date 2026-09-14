@@ -7,8 +7,8 @@
 <meta name="description" content="Ranking de visibilidad comercial de empresas del sector minero en América Latina.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2/dist/tabler-icons.min.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
   tailwind.config = {
@@ -19,14 +19,10 @@
             50: '#EEF4FF', 100: '#E0EBFF', 200: '#C2D8FF', 300: '#93BAFF',
             400: '#5C93FF', 500: '#2E6DF5', 600: '#0B5FE0', 700: '#0A49B3',
             800: '#0A3E96', 900: '#0B3376'
-          },
-          gold: { 100: '#FEF3C7', 400: '#F5B301', 600: '#B8860B', 700: '#8A6508' },
-          silver: { 100: '#F1F2F4', 400: '#9CA3AF', 600: '#6B7280', 700: '#4B5563' },
-          bronze: { 100: '#FCE9DD', 400: '#C97A44', 600: '#9A5A30', 700: '#7A4626' }
+          }
         },
         fontFamily: {
-          sans: ['Inter', 'sans-serif'],
-          display: ['"Barlow Condensed"', 'sans-serif'],
+          sans: ['Poppins', 'sans-serif'],
           helv: ['Helvetica', 'Arial', 'sans-serif']
         }
       }
@@ -42,19 +38,20 @@
   .dropdown-panel{ display:none; }
   .dropdown.open .dropdown-panel{ display:block; }
   .dropdown.open .chevron{ transform:rotate(180deg); }
+  [class^="ti-"], [class*=" ti-"]{ font-weight:300; }
 </style>
 </head>
-<body class="text-gray-900">
+<body class="text-gray-900 font-sans">
 
 <!-- Top bar -->
 <div class="border-b border-gray-200 bg-white">
   <div class="max-w-[1040px] mx-auto px-5 py-4 flex items-center justify-between gap-4 flex-wrap">
     <div class="flex items-center gap-2.5">
-      <div class="w-8 h-8 rounded-xl bg-brand-600 flex items-center justify-center">
-        <i class="fa-solid fa-mountain text-white text-sm"></i>
+      <div class="w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center">
+        <i class="ti ti-trending-up text-white text-base"></i>
       </div>
-      <span class="font-display font-extrabold text-xl tracking-tight">minero<span class="text-brand-600">ranking</span></span>
-      <span class="hidden sm:inline-flex items-center gap-2 bg-green-50 text-green-700 text-xs font-bold px-3 py-1.5 rounded-full ml-2">
+      <span class="font-helv font-bold text-xl tracking-tight">minero<span class="text-brand-600">ranking</span></span>
+      <span class="hidden sm:inline-flex items-center gap-2 bg-green-50 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full ml-2">
         <span class="relative flex h-2 w-2">
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
@@ -62,20 +59,16 @@
         <span id="visitorCount">128</span> visitantes hoy
       </span>
     </div>
-    <div class="flex items-center gap-6 text-sm font-semibold text-gray-500">
+    <div class="flex items-center gap-6 text-sm font-medium text-gray-500">
       <a href="sobre-el-ranking.html" class="hover:text-gray-900">Sobre el ranking</a>
       <a href="reglas.html" class="hover:text-gray-900">Reglas</a>
+      <a id="contactosLink" href="#" target="_blank" rel="noopener" class="hover:text-gray-900">Contactos</a>
     </div>
   </div>
 </div>
 
 <!-- Hero: claim-style stepper -->
 <div class="max-w-[1040px] mx-auto px-5 pt-10 pb-8 text-center">
-  <div class="inline-flex items-center gap-2 bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1.5 rounded-full mb-5">
-    <span class="w-1.5 h-1.5 rounded-full bg-brand-600"></span>
-    <span id="empresaCountLabel">Cargando empresas…</span>
-  </div>
-
   <h1 class="font-helv font-bold text-4xl sm:text-5xl leading-none tracking-tight text-gray-900">
     Alcanza el puesto
     <span id="heroPos" class="text-brand-600">#1</span>
@@ -84,38 +77,35 @@
     <span id="heroAmount" class="text-brand-600">S/300</span>
     <button id="plusBtn" class="align-middle inline-flex w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 items-center justify-center text-gray-500 text-lg mx-1">+</button>
   </h1>
-  <p class="text-gray-500 mt-3 max-w-lg mx-auto">Una tarifa, visibilidad permanente. La posición sube o baja según cuánto invierta cada empresa en visibilidad comercial.</p>
+  <div id="heroUsd" class="text-gray-400 text-sm font-normal mt-1"></div>
+  <p class="text-gray-500 text-xs sm:text-sm mt-3 max-w-lg mx-auto font-normal">Una tarifa, visibilidad permanente. La posición sube o baja según cuánto invierta cada empresa en visibilidad comercial.</p>
 
-  <div class="mt-7 flex flex-col sm:flex-row items-center gap-2.5 max-w-xl mx-auto">
-    <div class="relative flex-1 w-full">
-      <i class="fa-solid fa-building absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+  <div class="mt-7 flex flex-col sm:flex-row items-center gap-2.5 max-w-2xl mx-auto">
+    <div class="relative flex-[2] w-full">
+      <i class="ti ti-building absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
       <input id="empresaNombreInput" type="text" placeholder="Nombre de tu empresa"
-        class="w-full pl-11 pr-4 py-3.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium">
+        class="w-full pl-11 pr-4 py-3.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-normal">
     </div>
-    <div id="heroCategoryDropdown" class="dropdown relative w-full sm:w-auto"></div>
-    <button id="claimBtn" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold whitespace-nowrap">
+    <div id="heroCategoryDropdown" class="dropdown relative flex-1 w-full sm:w-auto"></div>
+    <button id="claimBtn" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold whitespace-nowrap">
       Reclamar posición
     </button>
   </div>
-
-  <p class="text-xs text-gray-400 mt-4 max-w-lg mx-auto leading-relaxed">
-    La posición en MINERO RANKING representa el nivel de visibilidad comercial contratado y no constituye una evaluación técnica, certificación ni garantía de calidad de la empresa.
-  </p>
 </div>
 
 <!-- Filters row -->
+<div class="max-w-[1040px] mx-auto px-5 pb-2 flex items-center justify-between flex-wrap gap-2">
+  <span id="countLabel" class="text-sm font-semibold text-brand-600">Cargando ranking…</span>
+  <span id="updatedLabel" class="text-xs font-normal text-gray-400"></span>
+</div>
 <div class="max-w-[1040px] mx-auto px-5 pb-3 flex items-center gap-2.5 flex-wrap" id="ranking">
-  <div class="relative w-full sm:w-64">
-    <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
-    <input id="searchInput" type="search" placeholder="Buscar empresa..."
-      class="w-full pl-10 pr-4 py-2.5 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-medium">
+  <div class="relative w-48">
+    <i class="ti ti-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+    <input id="searchInput" type="search" placeholder="Buscar..."
+      class="w-full pl-9 pr-3 py-2 rounded-full border-2 border-gray-200 focus:border-brand-500 focus:outline-none text-sm font-normal">
   </div>
   <div id="paisDropdown" class="dropdown relative"></div>
   <div id="catDropdown" class="dropdown relative"></div>
-</div>
-<div class="max-w-[1040px] mx-auto px-5 pb-1 text-xs font-semibold text-gray-400 flex justify-between">
-  <span id="countLabel">Cargando ranking…</span>
-  <span id="updatedLabel"></span>
 </div>
 
 <!-- Ranking list -->
@@ -124,7 +114,7 @@
   <div id="paginationBar" class="flex items-center justify-center gap-3 mt-8"></div>
 </main>
 
-<footer class="max-w-[1040px] mx-auto px-5 py-8 border-t border-gray-200 text-xs font-semibold text-gray-400">
+<footer class="max-w-[1040px] mx-auto px-5 py-8 border-t border-gray-200 text-xs font-medium text-gray-400">
   <div class="mb-2">MINERO RANKING · mineroranking.infoset.org.pe · Un servicio de INFOSET</div>
   <div class="flex flex-wrap gap-x-2 gap-y-1">
     <a href="reglas.html" class="hover:text-gray-700">Reglas</a><span>·</span>
@@ -147,34 +137,45 @@ const WHATSAPP_ADMIN = '51900000000'; // TODO: reemplazar por el WhatsApp real d
 const STEP = 10;
 const PAGE_SIZE = 50;
 const TOP_TINT_END = 25; // hasta qué posición se aplica el degradado azul
+document.getElementById('contactosLink').href = `https://wa.me/${WHATSAPP_ADMIN}`;
 
 const CATEGORY_ICONS = {
-  'Empresas Mineras': 'fa-industry',
-  'Exploración Geológica': 'fa-map-location-dot',
-  'Equipos y Maquinaria': 'fa-gears',
-  'Perforación y Voladura': 'fa-explosion',
-  'Procesamiento y Beneficio de Minerales': 'fa-filter',
-  'Insumos y Reactivos': 'fa-flask',
-  'Laboratorios y Análisis': 'fa-microscope',
-  'Ingeniería y Consultoría': 'fa-drafting-compass',
-  'Construcción y Obras': 'fa-building',
-  'Servicios y Mantenimiento': 'fa-screwdriver-wrench',
-  'Transporte y Logística': 'fa-truck',
-  'Seguridad, EPP y Protección Industrial': 'fa-hard-hat',
-  'Medio Ambiente y Gestión de Aguas': 'fa-droplet',
-  'Energía e Infraestructura Eléctrica': 'fa-bolt',
-  'Automatización y Tecnología': 'fa-microchip',
-  'Capacitación': 'fa-graduation-cap'
+  'Empresas Mineras': 'ti-building-factory',
+  'Exploración Geológica': 'ti-map-2',
+  'Equipos y Maquinaria': 'ti-settings',
+  'Perforación y Voladura': 'ti-flame',
+  'Procesamiento y Beneficio de Minerales': 'ti-filter',
+  'Insumos y Reactivos': 'ti-flask',
+  'Laboratorios y Análisis': 'ti-microscope',
+  'Ingeniería y Consultoría': 'ti-compass',
+  'Construcción y Obras': 'ti-building-skyscraper',
+  'Servicios y Mantenimiento': 'ti-tool',
+  'Transporte y Logística': 'ti-truck',
+  'Seguridad, EPP y Protección Industrial': 'ti-helmet',
+  'Medio Ambiente y Gestión de Aguas': 'ti-droplet',
+  'Energía e Infraestructura Eléctrica': 'ti-bolt',
+  'Automatización y Tecnología': 'ti-cpu',
+  'Capacitación': 'ti-school'
 };
 const CATEGORY_LIST = Object.keys(CATEGORY_ICONS);
-function catIcon(cat){ return CATEGORY_ICONS[cat] || 'fa-tag'; }
+function catIcon(cat){ return CATEGORY_ICONS[cat] || 'ti-tag'; }
 
-const COUNTRY_FLAGS = {
-  'Perú': '🇵🇪', 'Chile': '🇨🇱', 'Colombia': '🇨🇴', 'Argentina': '🇦🇷',
-  'Bolivia': '🇧🇴', 'Ecuador': '🇪🇨', 'México': '🇲🇽', 'Brasil': '🇧🇷',
-  'Panamá': '🇵🇦', 'Estados Unidos': '🇺🇸'
+// Códigos ISO de respaldo por si una empresa no trae "paisCodigo" en el JSON
+const COUNTRY_CODES = {
+  'Perú': 'PE', 'Chile': 'CL', 'Colombia': 'CO', 'Argentina': 'AR',
+  'Bolivia': 'BO', 'Ecuador': 'EC', 'México': 'MX', 'Brasil': 'BR',
+  'Panamá': 'PA', 'Estados Unidos': 'US'
 };
-function countryFlag(c){ return COUNTRY_FLAGS[c] || '🏳️'; }
+function countryCode(e){ return (e && e.paisCodigo) || COUNTRY_CODES[e && e.pais] || ''; }
+function flagImg(e, size){
+  const code = countryCode(e);
+  if(!code) return '';
+  return `<img src="https://flagsapi.com/${code}/flat/${size||32}.png" class="inline-block w-5 h-5 object-contain align-[-4px]" alt="${e.pais}">`;
+}
+function flagImgByCode(code, size){
+  if(!code) return '';
+  return `<img src="https://flagsapi.com/${code}/flat/${size||32}.png" class="inline-block w-5 h-5 object-contain align-[-4px]" alt="">`;
+}
 
 let empresas = [];
 let heroAmount = 300;
@@ -182,6 +183,17 @@ let currentPage = 1;
 let selectedPais = '';
 let selectedCat = '';
 let selectedHeroCat = '';
+
+// Conversión de moneda: PEN -> USD vía API pública (sin API key). Si falla, se usa un valor de respaldo.
+let PEN_TO_USD = 0.27; // valor de respaldo aproximado
+async function loadExchangeRate(){
+  try{
+    const r = await fetch('https://open.er-api.com/v6/latest/PEN');
+    const data = await r.json();
+    if(data && data.rates && data.rates.USD) PEN_TO_USD = data.rates.USD;
+  }catch(err){ console.warn('No se pudo obtener el tipo de cambio, usando valor de respaldo.', err); }
+}
+function fmtUSD(n){ return '$' + Math.round(n * PEN_TO_USD).toLocaleString('en-US'); }
 
 // Contador de visitantes: placeholder hasta conectar analítica real (ej. datafa.st, Plausible, GA4)
 document.getElementById('visitorCount').textContent = Math.floor(80 + Math.random() * 150).toLocaleString('es-PE');
@@ -207,16 +219,16 @@ function sortEmpresas(list){
 
 function logoHtml(e){
   if(e.logo) return `<img src="${e.logo}" alt="${e.empresa}" class="w-full h-full object-cover rounded-2xl">`;
-  return `<i class="fa-solid ${catIcon(e.categoria)} text-lg"></i>`;
+  return `<i class="ti ${catIcon(e.categoria)} text-lg"></i>`;
 }
 
 /* ---------- Generic icon/flag dropdown ---------- */
 function buildDropdown(containerId, {placeholder, items, onSelect}){
   const root = document.getElementById(containerId);
   root.innerHTML = `
-    <button type="button" class="dd-btn w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-full border-2 border-gray-200 hover:border-gray-300 text-sm font-medium text-gray-600 bg-white">
+    <button type="button" class="dd-btn w-full flex items-center justify-between gap-2 px-4 py-2.5 rounded-full border-2 border-gray-200 hover:border-gray-300 text-sm font-normal text-gray-600 bg-white">
       <span class="dd-label flex items-center gap-2 truncate">${placeholder}</span>
-      <i class="fa-solid fa-chevron-down chevron text-xs text-gray-400 transition-transform"></i>
+      <i class="ti ti-chevron-down chevron text-xs text-gray-400 transition-transform"></i>
     </button>
     <div class="dropdown-panel absolute z-20 mt-2 w-56 max-h-72 overflow-y-auto bg-white border-2 border-gray-200 rounded-2xl shadow-lg p-1.5"></div>
   `;
@@ -227,9 +239,9 @@ function buildDropdown(containerId, {placeholder, items, onSelect}){
   function renderItems(){
     panel.innerHTML = items.map(it => `
       <button type="button" data-value="${it.value}"
-        class="dd-item w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-gray-100 text-sm font-medium text-gray-700 text-left">
-        ${it.icon ? `<i class="fa-solid ${it.icon} w-4 text-gray-400"></i>` : ''}
-        ${it.flag ? `<span class="w-4">${it.flag}</span>` : ''}
+        class="dd-item w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-gray-100 text-sm font-normal text-gray-700 text-left">
+        ${it.icon ? `<i class="ti ${it.icon} w-4 text-gray-400"></i>` : ''}
+        ${it.flagCode ? `${flagImgByCode(it.flagCode, 24)}` : ''}
         <span class="truncate">${it.label}</span>
       </button>
     `).join('');
@@ -238,7 +250,7 @@ function buildDropdown(containerId, {placeholder, items, onSelect}){
         const val = el.dataset.value;
         const found = items.find(i => i.value === val);
         label.innerHTML = found.value === '' ? placeholder :
-          `${found.icon ? `<i class="fa-solid ${found.icon} text-gray-400"></i>` : ''}${found.flag ? `<span>${found.flag}</span>` : ''}<span class="truncate">${found.label}</span>`;
+          `${found.icon ? `<i class="ti ${found.icon} text-gray-400"></i>` : ''}${found.flagCode ? flagImgByCode(found.flagCode, 24) : ''}<span class="truncate">${found.label}</span>`;
         root.classList.remove('open');
         onSelect(val);
       });
@@ -257,11 +269,11 @@ document.addEventListener('click', ()=>{
 });
 
 function populateFilters(list){
-  const paises = [...new Set(list.map(e=>e.pais))].sort();
+  const paisesUnicos = [...new Map(list.map(e=>[e.pais, countryCode(e)])).entries()].sort((a,b)=>a[0].localeCompare(b[0]));
 
   buildDropdown('paisDropdown', {
     placeholder: 'País: todos',
-    items: [{value:'', label:'Todos los países'}, ...paises.map(p=>({value:p, label:p, flag:countryFlag(p)}))],
+    items: [{value:'', label:'Todos los países'}, ...paisesUnicos.map(([p,code])=>({value:p, label:p, flagCode:code}))],
     onSelect: (v)=>{ selectedPais = v; currentPage = 1; render(); }
   });
 
@@ -284,6 +296,7 @@ function updateHero(){
   for(const e of sorted){ if(e.rankingAmount >= heroAmount) pos++; else break; }
   document.getElementById('heroPos').textContent = '#' + pos;
   document.getElementById('heroAmount').textContent = fmtMonto(heroAmount);
+  document.getElementById('heroUsd').textContent = heroAmount > 0 ? `≈ ${fmtUSD(heroAmount)} USD` : '';
 }
 
 document.getElementById('minusBtn').addEventListener('click', ()=>{
@@ -301,18 +314,10 @@ document.getElementById('claimBtn').addEventListener('click', ()=>{
   window.open(`https://wa.me/${WHATSAPP_ADMIN}?text=${msg}`, '_blank');
 });
 
-/* ---------- Podium styling helpers ---------- */
-function podiumClasses(pos){
-  if(pos === 1) return { card:'bg-gold-100 border-gold-400', posColor:'text-gold-700', amountColor:'text-gold-700', nameColor:'text-gray-900', descColor:'text-gray-800 font-semibold', metaColor:'text-gray-700 font-bold', medalIcon:'fa-trophy', medalColor:'text-gold-400' };
-  if(pos === 2) return { card:'bg-silver-100 border-silver-400', posColor:'text-silver-700', amountColor:'text-silver-700', nameColor:'text-gray-900', descColor:'text-gray-700 font-semibold', metaColor:'text-gray-600 font-bold', medalIcon:'fa-medal', medalColor:'text-silver-400' };
-  if(pos === 3) return { card:'bg-bronze-100 border-bronze-400', posColor:'text-bronze-700', amountColor:'text-bronze-700', nameColor:'text-gray-900', descColor:'text-gray-700 font-semibold', metaColor:'text-gray-600 font-bold', medalIcon:'fa-medal', medalColor:'text-bronze-400' };
-  return null;
-}
-
+/* Degradado de azul continuo: mas intenso en el puesto 1, se desvanece hacia blanco en el puesto 25 */
 function blueTintStyle(pos){
-  // Degradado de azul: mas intenso en el puesto 4, se desvanece hacia blanco en el puesto 25
-  const t = (pos - 4) / (TOP_TINT_END - 4);
-  const alpha = Math.max(0, 0.16 - t * 0.16);
+  const t = Math.min(1, (pos - 1) / (TOP_TINT_END - 1));
+  const alpha = Math.max(0, 0.30 - t * 0.30);
   return `background-color: rgba(11,95,224,${alpha.toFixed(3)});`;
 }
 
@@ -334,13 +339,13 @@ function render(){
   const pagBar = document.getElementById('paginationBar');
 
   if(filtered.length === 0){
-    container.innerHTML = '<div class="text-center py-16 text-gray-400">Ninguna empresa coincide con tu búsqueda.</div>';
+    container.innerHTML = '<div class="text-center py-16 text-gray-400 font-normal">Ninguna empresa coincide con tu búsqueda.</div>';
     countLabel.textContent = '0 empresas';
     pagBar.innerHTML = '';
     return;
   }
 
-  countLabel.textContent = filtered.length + (filtered.length === 1 ? ' empresa' : ' empresas');
+  countLabel.textContent = filtered.length + (filtered.length === 1 ? ' empresa ya en el ranking' : ' empresas ya en el ranking');
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   if(currentPage > totalPages) currentPage = totalPages;
@@ -353,56 +358,52 @@ function render(){
   pageItems.forEach((e, i)=>{
     const globalPos = fullSorted.findIndex(x => x.id === e.id) + 1;
     const isFree = e.rankingAmount === 0;
-    const podium = podiumClasses(globalPos);
+    const claimAmount = e.rankingAmount + 1;
 
     if(!dividerInserted && globalPos > TOP_TINT_END && pageStart + i > 0){
-      html += `<div class="flex items-center gap-3 py-3 text-xs font-bold text-gray-400"><span class="flex-1 h-px bg-gray-200"></span>Posiciones ${TOP_TINT_END + 1}–${Math.min(50, filtered.length)}<span class="flex-1 h-px bg-gray-200"></span></div>`;
+      html += `<div class="flex items-center gap-3 py-3 text-xs font-semibold text-gray-400"><span class="flex-1 h-px bg-gray-200"></span>Posiciones ${TOP_TINT_END + 1}–${Math.min(50, filtered.length)}<span class="flex-1 h-px bg-gray-200"></span></div>`;
       dividerInserted = true;
     }
 
     let cardStyle = '';
-    let cardClass = 'bg-white border-gray-200';
-    let posInner = `<span class="font-display font-extrabold text-2xl">#${globalPos}</span>`;
-    let nameClass = 'text-gray-900';
-    let descClass = 'text-gray-500';
-    let metaClass = 'text-gray-400';
-    let amountClass = isFree ? 'text-gray-400' : 'text-brand-600';
+    if(globalPos <= TOP_TINT_END) cardStyle = blueTintStyle(globalPos);
 
-    if(podium){
-      cardClass = `${podium.card} border-2`;
-      posInner = `<i class="fa-solid ${podium.medalIcon} ${podium.medalColor} text-xl block mb-0.5"></i><span class="font-display font-extrabold text-xl ${podium.posColor}">#${globalPos}</span>`;
-      nameClass = podium.nameColor;
-      descClass = podium.descColor;
-      metaClass = podium.metaColor;
-      amountClass = podium.amountColor + ' font-extrabold';
-    } else if(globalPos >= 4 && globalPos <= TOP_TINT_END){
-      cardStyle = blueTintStyle(globalPos);
-      cardClass = 'border-brand-100 border-2';
-    }
+    const posColor = globalPos <= 3 ? 'text-brand-700' : (globalPos <= TOP_TINT_END ? 'text-brand-500' : 'text-gray-400');
+    const nameColor = globalPos <= 3 ? 'text-gray-900' : 'text-gray-800';
+    const descColor = globalPos === 1 ? 'text-gray-800 font-medium' : 'text-gray-500 font-normal';
+    const amountColor = isFree ? 'text-gray-400' : 'text-brand-700';
 
     html += `
       <div data-id="${e.id}" style="${cardStyle}"
-        class="row-card cursor-pointer rounded-2xl border-2 ${cardClass} hover:border-brand-400 transition-colors p-4 flex items-center gap-4">
-        <div class="w-12 text-center shrink-0">${posInner}</div>
-        <div class="w-14 h-14 shrink-0 rounded-2xl bg-white border-2 border-gray-200 flex items-center justify-center text-gray-400 overflow-hidden">
+        class="row-card group relative overflow-hidden cursor-pointer rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 flex items-center gap-4">
+        <div class="w-10 text-center shrink-0">
+          <span class="font-sans font-semibold text-2xl ${posColor}">#${globalPos}</span>
+        </div>
+        <div class="w-14 h-14 shrink-0 rounded-2xl bg-white flex items-center justify-center text-gray-400 overflow-hidden">
           ${logoHtml(e)}
         </div>
         <div class="flex-1 min-w-0">
-          <div class="font-bold text-base ${nameClass} truncate">${e.empresa}</div>
-          <div class="desc-clamp text-sm ${descClass}">${e.descripcion || ''}</div>
-          <div class="flex items-center gap-1.5 text-xs ${metaClass} mt-1">
-            <i class="fa-solid ${catIcon(e.categoria)}"></i>
+          <div class="font-semibold text-base ${nameColor} truncate">${e.empresa}</div>
+          <div class="desc-clamp text-sm ${descColor}">${e.descripcion || ''}</div>
+          <div class="flex items-center gap-1.5 text-xs text-gray-400 font-normal mt-1">
+            <i class="ti ${catIcon(e.categoria)}"></i>
             <span>${e.categoria}</span>
             <span>·</span>
-            <span>${countryFlag(e.pais)} ${e.ciudad}, ${e.pais}</span>
+            <span class="inline-flex items-center gap-1">${flagImg(e,24)} ${e.ciudad}, ${e.pais}</span>
             <span>·</span>
             <span>${diasDesde(e.rankingSince)}</span>
             <span>·</span>
-            <span class="text-brand-600 font-semibold">ver detalles</span>
+            <span class="text-brand-600 font-medium">ver detalles</span>
           </div>
         </div>
         <div class="text-right shrink-0">
-          <div class="font-extrabold text-lg ${amountClass}">${fmtMonto(e.rankingAmount)}</div>
+          <div class="font-sans font-medium text-lg ${amountColor}">${fmtMonto(e.rankingAmount)}</div>
+          <div class="text-xs text-gray-400 font-normal">${e.rankingAmount > 0 ? '≈ ' + fmtUSD(e.rankingAmount) : ''}</div>
+        </div>
+        <div class="claim-overlay absolute inset-y-0 right-0 flex items-center pr-4 pl-16 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-l from-white via-white/95 to-transparent pointer-events-none group-hover:pointer-events-auto">
+          <button data-amount="${claimAmount}" class="claim-btn bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg whitespace-nowrap">
+            Reclamar por ${fmtMonto(claimAmount)}
+          </button>
         </div>
       </div>
     `;
@@ -412,16 +413,24 @@ function render(){
   container.querySelectorAll('.row-card').forEach(row=>{
     row.addEventListener('click', ()=> openModal(row.dataset.id));
   });
+  container.querySelectorAll('.claim-btn').forEach(btn=>{
+    btn.addEventListener('click', (ev)=>{
+      ev.stopPropagation();
+      heroAmount = Number(btn.dataset.amount);
+      updateHero();
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
 
   // Pagination bar
   if(totalPages > 1){
     pagBar.innerHTML = `
-      <button id="prevPage" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-bold text-gray-600 disabled:opacity-40" ${currentPage === 1 ? 'disabled' : ''}>
-        <i class="fa-solid fa-chevron-left mr-1"></i> Anterior
+      <button id="prevPage" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium text-gray-600 disabled:opacity-40" ${currentPage === 1 ? 'disabled' : ''}>
+        <i class="ti ti-chevron-left mr-1"></i> Anterior
       </button>
-      <span class="text-sm font-bold text-gray-500">Página ${currentPage} de ${totalPages}</span>
-      <button id="nextPage" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-bold text-gray-600 disabled:opacity-40" ${currentPage === totalPages ? 'disabled' : ''}>
-        Siguiente <i class="fa-solid fa-chevron-right ml-1"></i>
+      <span class="text-sm font-medium text-gray-500">Página ${currentPage} de ${totalPages}</span>
+      <button id="nextPage" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium text-gray-600 disabled:opacity-40" ${currentPage === totalPages ? 'disabled' : ''}>
+        Siguiente <i class="ti ti-chevron-right ml-1"></i>
       </button>
     `;
     const prevBtn = document.getElementById('prevPage');
@@ -441,28 +450,28 @@ function openModal(id){
 
   document.getElementById('modalContent').innerHTML = `
     <button id="closeBtn" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
-      <i class="fa-solid fa-xmark"></i>
+      <i class="ti ti-x"></i>
     </button>
     <div class="flex items-center gap-4 mb-5">
-      <div class="w-20 h-20 rounded-2xl bg-gray-50 border-2 border-gray-200 flex items-center justify-center text-gray-400 text-2xl overflow-hidden">
+      <div class="w-20 h-20 rounded-2xl bg-gray-50 flex items-center justify-center text-gray-400 text-2xl overflow-hidden">
         ${logoHtml(e)}
       </div>
       <div>
-        <div class="inline-flex items-center gap-1.5 bg-brand-50 text-brand-700 text-xs font-bold px-3 py-1 rounded-full mb-2">
-          <i class="fa-solid fa-ranking-star"></i> POSICIÓN #${pos}
+        <div class="inline-flex items-center gap-1.5 bg-brand-50 text-brand-700 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+          <i class="ti ti-medal"></i> POSICIÓN #${pos}
         </div>
         <h2 class="font-helv font-bold text-2xl leading-none">${e.empresa}</h2>
-        <div class="text-sm text-gray-500 font-medium mt-1.5">
-          <i class="fa-solid fa-location-dot"></i> ${countryFlag(e.pais)} ${e.ciudad}, ${e.pais}
-          &nbsp;·&nbsp;<i class="fa-solid ${catIcon(e.categoria)}"></i> ${e.categoria}
+        <div class="text-sm text-gray-500 font-normal mt-1.5 flex items-center gap-1 flex-wrap">
+          <i class="ti ti-map-pin"></i> ${flagImg(e,24)} ${e.ciudad}, ${e.pais}
+          &nbsp;·&nbsp;<i class="ti ${catIcon(e.categoria)}"></i> ${e.categoria}
         </div>
       </div>
     </div>
-    <p class="text-sm text-gray-700 mb-5 leading-relaxed">${e.descripcion || ''}</p>
+    <p class="text-sm text-gray-700 font-normal mb-5 leading-relaxed">${e.descripcion || ''}</p>
     <div class="flex flex-wrap gap-2.5">
-      ${e.website ? `<a href="${e.website}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-bold"><i class="fa-solid fa-globe"></i> Sitio web</a>` : ''}
-      ${e.whatsapp ? `<a href="https://wa.me/${e.whatsapp}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] hover:bg-[#1DA851] text-white text-sm font-bold"><i class="fa-brands fa-whatsapp text-base"></i> WhatsApp</a>` : ''}
-      <a href="https://wa.me/${WHATSAPP_ADMIN}?text=${waMsg}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-bold"><i class="fa-solid fa-arrow-trend-up"></i> Mejorar posición</a>
+      ${e.website ? `<a href="${e.website}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold"><i class="ti ti-world"></i> Sitio web</a>` : ''}
+      ${e.whatsapp ? `<a href="https://wa.me/${e.whatsapp}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-[#25D366] hover:bg-[#1DA851] text-white text-sm font-semibold"><i class="ti ti-brand-whatsapp"></i> WhatsApp</a>` : ''}
+      <a href="https://wa.me/${WHATSAPP_ADMIN}?text=${waMsg}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-semibold"><i class="ti ti-trending-up"></i> Mejorar posición</a>
     </div>
   `;
   document.getElementById('overlay').classList.remove('hidden');
@@ -481,24 +490,23 @@ document.addEventListener('keydown', (ev)=>{ if(ev.key === 'Escape') closeModal(
 
 document.getElementById('searchInput').addEventListener('input', ()=>{ currentPage = 1; render(); });
 
-fetch(DATA_URL)
-  .then(r=>r.json())
-  .then(data=>{
-    empresas = (data.empresas || []).filter(e=>e.estado === 'PUBLICADO');
-    populateFilters(empresas);
-    document.getElementById('empresaCountLabel').textContent = `${empresas.length} empresas ya en el ranking`;
-    if(empresas.length){
-      const maxAmount = Math.max(...empresas.map(e=>e.rankingAmount));
-      heroAmount = maxAmount + STEP;
-    }
-    updateHero();
-    render();
-  })
-  .catch(err=>{
-    document.getElementById('listContainer').innerHTML =
-      '<div class="text-center py-16 text-gray-400">No se pudo cargar el ranking. Intenta nuevamente más tarde.</div>';
-    console.error(err);
-  });
+Promise.all([
+  fetch(DATA_URL).then(r=>r.json()),
+  loadExchangeRate()
+]).then(([data])=>{
+  empresas = (data.empresas || []).filter(e=>e.estado === 'PUBLICADO');
+  populateFilters(empresas);
+  if(empresas.length){
+    const maxAmount = Math.max(...empresas.map(e=>e.rankingAmount));
+    heroAmount = maxAmount + STEP;
+  }
+  updateHero();
+  render();
+}).catch(err=>{
+  document.getElementById('listContainer').innerHTML =
+    '<div class="text-center py-16 text-gray-400 font-normal">No se pudo cargar el ranking. Intenta nuevamente más tarde.</div>';
+  console.error(err);
+});
 </script>
 
 </body>

@@ -14,15 +14,18 @@
  * ESTRUCTURA DE HOJAS ESPERADA:
  *
  * Hoja "EMPRESAS" (columnas, en este orden):
- *   ID | Empresa | Slug | Pais | Ciudad | Categoria | Descripcion | Productos
- *   | Logo | Website | WhatsApp | Email | Estado | RankingAmount | RankingSince
+ *   ID | Empresa | Slug | Pais | PaisCodigo | Ciudad | Categoria | Descripcion
+ *   | Productos | Logo | Website | WhatsApp | Email | Estado | RankingAmount | RankingSince
  *
+ *   - PaisCodigo: código ISO de 2 letras (PE, CL, CO, AR, BO, EC, MX, BR, PA, US...)
+ *     usado para mostrar la bandera vía flagsapi.com. Si se deja vacío, el sitio
+ *     intenta adivinarlo por el nombre del país, pero es mejor completarlo siempre.
  *   - Descripcion: OBLIGATORIA, una o dos frases — se muestra directamente
  *     en la fila del ranking, no solo en el detalle.
  *   - Productos: separar varios valores con punto y coma ";"
  *   - Logo: URL pública de la imagen (recomendado 256x256 o 128x128, cuadrada,
  *     fondo transparente o blanco). Si está vacío, el sitio muestra un ícono
- *     genérico de fábrica en su lugar — no rompe nada dejarlo en blanco.
+ *     genérico de la categoría en su lugar — no rompe nada dejarlo en blanco.
  *   - Estado: PENDIENTE | PUBLICADO
  *   - RankingSince: fecha/hora en que se alcanzó el RankingAmount actual
  *
@@ -39,9 +42,9 @@ const SHEET_EMPRESAS = 'EMPRESAS';
 const SHEET_PAGOS = 'PAGOS';
 
 const COL_EMPRESAS = {
-  ID: 1, EMPRESA: 2, SLUG: 3, PAIS: 4, CIUDAD: 5, CATEGORIA: 6,
-  DESCRIPCION: 7, PRODUCTOS: 8, LOGO: 9, WEBSITE: 10, WHATSAPP: 11, EMAIL: 12,
-  ESTADO: 13, RANKING_AMOUNT: 14, RANKING_SINCE: 15
+  ID: 1, EMPRESA: 2, SLUG: 3, PAIS: 4, PAIS_CODIGO: 5, CIUDAD: 6, CATEGORIA: 7,
+  DESCRIPCION: 8, PRODUCTOS: 9, LOGO: 10, WEBSITE: 11, WHATSAPP: 12, EMAIL: 13,
+  ESTADO: 14, RANKING_AMOUNT: 15, RANKING_SINCE: 16
 };
 
 const COL_PAGOS = {
@@ -113,6 +116,7 @@ function recalcularYPublicar() {
       empresa: row[COL_EMPRESAS.EMPRESA - 1],
       slug: row[COL_EMPRESAS.SLUG - 1],
       pais: row[COL_EMPRESAS.PAIS - 1],
+      paisCodigo: row[COL_EMPRESAS.PAIS_CODIGO - 1] || '',
       ciudad: row[COL_EMPRESAS.CIUDAD - 1],
       categoria: row[COL_EMPRESAS.CATEGORIA - 1],
       descripcion: row[COL_EMPRESAS.DESCRIPCION - 1],

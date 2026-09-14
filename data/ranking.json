@@ -21,7 +21,8 @@
       "estado": "PUBLICADO",
       "rankingAmount": 300,
       "rankingSince": "2026-08-01T10:00:00-05:00",
-      "logo": ""
+      "logo": "",
+      "paisCodigo": "PE"
     },
     {
       "id": "EMP-002",
@@ -41,7 +42,8 @@
       "estado": "PUBLICADO",
       "rankingAmount": 250,
       "rankingSince": "2026-08-03T10:00:00-05:00",
-      "logo": ""
+      "logo": "",
+      "paisCodigo": "CL"
     },
     {
       "id": "EMP-003",
@@ -61,7 +63,8 @@
       "estado": "PUBLICADO",
       "rankingAmount": 180,
       "rankingSince": "2026-08-05T10:00:00-05:00",
-      "logo": ""
+      "logo": "",
+      "paisCodigo": "CO"
     },
     {
       "id": "EMP-004",
@@ -81,7 +84,8 @@
       "estado": "PUBLICADO",
       "rankingAmount": 120,
       "rankingSince": "2026-08-07T10:00:00-05:00",
-      "logo": ""
+      "logo": "",
+      "paisCodigo": "PE"
     },
     {
       "id": "EMP-005",
@@ -101,7 +105,8 @@
       "estado": "PUBLICADO",
       "rankingAmount": 80,
       "rankingSince": "2026-08-10T10:00:00-05:00",
-      "logo": ""
+      "logo": "",
+      "paisCodigo": "PE"
     },
     {
       "id": "EMP-006",
@@ -122,7 +127,8 @@
       "estado": "PUBLICADO",
       "rankingAmount": 50,
       "rankingSince": "2026-08-12T10:00:00-05:00",
-      "logo": ""
+      "logo": "",
+      "paisCodigo": "PE"
     },
     {
       "id": "EMP-007",
@@ -142,7 +148,8 @@
       "estado": "PUBLICADO",
       "rankingAmount": 0,
       "rankingSince": "2026-08-14T10:00:00-05:00",
-      "logo": ""
+      "logo": "",
+      "paisCodigo": "PE"
     },
     {
       "id": "EMP-008",
@@ -162,7 +169,8 @@
       "estado": "PUBLICADO",
       "rankingAmount": 0,
       "rankingSince": "2026-08-15T10:00:00-05:00",
-      "logo": ""
+      "logo": "",
+      "paisCodigo": "PE"
     }
   ]
 }
