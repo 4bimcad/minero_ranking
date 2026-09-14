@@ -234,8 +234,17 @@ async function loadExchangeRate(){
 }
 function fmtUSD(n){ return '$' + Math.round(n * PEN_TO_USD).toLocaleString('en-US') + ' USD'; }
 
-// Contador de visitantes: placeholder hasta conectar analítica real (ej. datafa.st, Plausible, GA4)
-document.getElementById('visitorCount').textContent = Math.floor(80 + Math.random() * 150).toLocaleString('es-PE');
+// Contador de visitantes REAL (Abacus API — gratis, sin registro, sin API key).
+// Suma 1 cada vez que alguien carga la página. Si cambias de dominio,
+// actualiza el "namespace" de la URL de abajo para que el conteo sea el correcto.
+fetch('https://abacus.jasoncameron.dev/hit/mineroranking.infoset.org.pe/visitas')
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById('visitorCount').textContent = data.value.toLocaleString('es-PE');
+  })
+  .catch(() => {
+    document.getElementById('visitorCount').textContent = '—';
+  });
 
 function fmtMonto(n){ return n === 0 ? 'S/0' : 'S/' + n.toLocaleString('es-PE'); }
 
