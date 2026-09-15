@@ -161,9 +161,15 @@ async function loadExchangeRate(){
 function fmtMonto(n){ return n === 0 ? 'S/0' : 'S/' + n.toLocaleString('es-PE'); }
 function fmtUSD(n){ return '$' + Math.round(n * PEN_TO_USD).toLocaleString('en-US') + ' USD'; }
 
+const COUNTRY_CODES = {
+  'Perú': 'PE', 'Chile': 'CL', 'Colombia': 'CO', 'Argentina': 'AR',
+  'Bolivia': 'BO', 'Ecuador': 'EC', 'México': 'MX', 'Brasil': 'BR',
+  'Panamá': 'PA', 'Estados Unidos': 'US'
+};
 function flagImg(pais, code, size){
-  if(!code) return '';
-  return `<img src="https://flagsapi.com/${code}/flat/${size||24}.png" class="inline-block w-5 h-5 object-contain align-[-4px]" alt="${pais}">`;
+  const finalCode = code || COUNTRY_CODES[pais] || '';
+  if(!finalCode) return '';
+  return `<img src="https://flagsapi.com/${finalCode}/flat/${size||24}.png" class="inline-block w-5 h-5 object-contain align-[-4px]" alt="${pais}" onerror="this.style.display='none'">`;
 }
 
 function sortEmpresas(list){
@@ -213,8 +219,9 @@ Promise.all([
   const porPais = {};
   const codigos = {};
   empresas.forEach(e=>{
-    porPais[e.pais] = (porPais[e.pais] || 0) + 1;
-    codigos[e.pais] = e.paisCodigo;
+    const pais = e.pais || 'Sin país';
+    porPais[pais] = (porPais[pais] || 0) + 1;
+    codigos[pais] = e.paisCodigo;
   });
   const paisesOrdenados = Object.entries(porPais).sort((a,b)=>b[1]-a[1]);
   document.getElementById('statPaises').textContent = paisesOrdenados.length;
@@ -225,7 +232,10 @@ Promise.all([
     .join('');
 
   const porCat = {};
-  empresas.forEach(e=>{ porCat[e.categoria] = (porCat[e.categoria] || 0) + 1; });
+  empresas.forEach(e=>{
+    const cat = e.categoria || 'Sin categoría';
+    porCat[cat] = (porCat[cat] || 0) + 1;
+  });
   const catsOrdenadas = Object.entries(porCat).sort((a,b)=>b[1]-a[1]);
   const maxCat = catsOrdenadas.length ? catsOrdenadas[0][1] : 0;
   document.getElementById('listaCategorias').innerHTML = catsOrdenadas
