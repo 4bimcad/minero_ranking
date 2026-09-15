@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-15T00:57:43.751Z",
+  "updatedAt": "2026-09-15T01:06:57.795Z",
   "empresas": [
     {
       "id": "TEST-001",
@@ -16,8 +16,8 @@
       "whatsapp": "",
       "email": "",
       "estado": "PUBLICADO",
-      "rankingAmount": 315,
-      "rankingSince": "2026-09-15T00:57:35.696Z"
+      "rankingAmount": 320,
+      "rankingSince": "2026-09-15T01:06:55.766Z"
     },
     {
       "id": "MR-20260914164916-1",
