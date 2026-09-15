@@ -1,6 +1,24 @@
 {
-  "updatedAt": "2026-09-14T23:07:12.908Z",
+  "updatedAt": "2026-09-15T00:57:43.751Z",
   "empresas": [
+    {
+      "id": "TEST-001",
+      "empresa": "Empresa Test Ranking",
+      "slug": "",
+      "pais": "",
+      "paisCodigo": "",
+      "ciudad": "",
+      "categoria": "",
+      "descripcion": "",
+      "productos": [],
+      "logo": "",
+      "website": "",
+      "whatsapp": "",
+      "email": "",
+      "estado": "PUBLICADO",
+      "rankingAmount": 315,
+      "rankingSince": "2026-09-15T00:57:35.696Z"
+    },
     {
       "id": "MR-20260914164916-1",
       "empresa": "INCAJATA S.A.C.",
