@@ -1,24 +1,6 @@
 {
-  "updatedAt": "2026-09-15T01:06:57.795Z",
+  "updatedAt": "2026-09-16T03:36:28.166Z",
   "empresas": [
-    {
-      "id": "TEST-001",
-      "empresa": "Empresa Test Ranking",
-      "slug": "",
-      "pais": "",
-      "paisCodigo": "",
-      "ciudad": "",
-      "categoria": "",
-      "descripcion": "",
-      "productos": [],
-      "logo": "",
-      "website": "",
-      "whatsapp": "",
-      "email": "",
-      "estado": "PUBLICADO",
-      "rankingAmount": 320,
-      "rankingSince": "2026-09-15T01:06:55.766Z"
-    },
     {
       "id": "MR-20260914164916-1",
       "empresa": "INCAJATA S.A.C.",
@@ -27,15 +9,15 @@
       "paisCodigo": "PE",
       "ciudad": "Arequipa",
       "categoria": "Empresas Mineras",
-      "descripcion": "Actividad minera, capacitaciòn, consultorio.",
+      "descripcion": "Consultoría y Proyectos Mineros, Gestión y Administración, Procesamiento.",
       "productos": [],
       "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260914164916-1.png",
       "website": "https://incajata.org.pe",
       "whatsapp": "+51963299237",
       "email": "incajata@gmail.com",
       "estado": "PUBLICADO",
-      "rankingAmount": 300,
-      "rankingSince": "2026-09-14T21:49:16.959Z"
+      "rankingAmount": 305,
+      "rankingSince": "2026-09-16T03:36:25.990Z"
     }
   ]
 }
