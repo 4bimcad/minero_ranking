@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T05:49:12.826Z",
+  "updatedAt": "2026-09-16T05:52:27.205Z",
   "empresas": [
     {
       "id": "MR-20260915234204-5",
@@ -74,6 +74,24 @@
       "rankingSince": "2026-09-16T04:56:49.884Z"
     },
     {
+      "id": "MR-20260916004635-7",
+      "empresa": "Stanislav Tsvitkov",
+      "slug": "stanislav-tsvitkov",
+      "pais": "Perú",
+      "paisCodigo": "PE",
+      "ciudad": "Arequipa",
+      "categoria": "Perfiles Profesionales",
+      "descripcion": "Ingeniero. Profesional en recuperación de oro fino.",
+      "productos": [],
+      "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260916004635-7.png",
+      "website": "https://linkedin.com/in/4bimcad/",
+      "whatsapp": "+51963299237",
+      "email": "infoset.oficina@gmail.com",
+      "estado": "PUBLICADO",
+      "rankingAmount": 15,
+      "rankingSince": "2026-09-16T05:52:15.234Z"
+    },
+    {
       "id": "MR-20260915224724-2",
       "empresa": "POLIPROM S.A.C.",
       "slug": "poliprom-s-a-c",
@@ -108,24 +126,6 @@
       "estado": "PUBLICADO",
       "rankingAmount": 10,
       "rankingSince": "2026-09-16T04:16:57.107Z"
-    },
-    {
-      "id": "MR-20260916004635-7",
-      "empresa": "Stanislav Tsvitkov",
-      "slug": "stanislav-tsvitkov",
-      "pais": "Perú",
-      "paisCodigo": "PE",
-      "ciudad": "Arequipa",
-      "categoria": "Perfiles Profesionales",
-      "descripcion": "Ingeniero. Profesional en recuperación de oro fino.",
-      "productos": [],
-      "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260916004635-7.png",
-      "website": "https://linkedin.com/in/4bimcad/",
-      "whatsapp": "+51963299237",
-      "email": "infoset.oficina@gmail.com",
-      "estado": "PUBLICADO",
-      "rankingAmount": 10,
-      "rankingSince": "2026-09-16T05:49:01.681Z"
     }
   ]
 }
