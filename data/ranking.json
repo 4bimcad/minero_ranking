@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T03:38:07.350Z",
+  "updatedAt": "2026-09-16T04:00:04.708Z",
   "empresas": [
     {
       "id": "MR-20260914164916-1",
@@ -18,6 +18,24 @@
       "estado": "PUBLICADO",
       "rankingAmount": 305,
       "rankingSince": "2026-09-16T03:36:25.990Z"
+    },
+    {
+      "id": "MR-20260915224724-2",
+      "empresa": "POLIPROM S.A.C.",
+      "slug": "poliprom-s-a-c",
+      "pais": "Perú",
+      "paisCodigo": "PE",
+      "ciudad": "Lima",
+      "categoria": "Empresas Mineras",
+      "descripcion": "Compra venta de Concentrados (Zn, Pb, Cu, Au, Ag, etc). Procesamiento",
+      "productos": [],
+      "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260915224724-2.jpg",
+      "website": "https://poliprom.pe",
+      "whatsapp": "+51929295522",
+      "email": "info@poliprom.pe",
+      "estado": "PUBLICADO",
+      "rankingAmount": 10,
+      "rankingSince": "2026-09-16T04:00:00.958Z"
     }
   ]
 }
