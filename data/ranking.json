@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T04:17:02.602Z",
+  "updatedAt": "2026-09-16T04:31:13.146Z",
   "empresas": [
     {
       "id": "MR-20260914164916-1",
@@ -54,6 +54,24 @@
       "estado": "PUBLICADO",
       "rankingAmount": 10,
       "rankingSince": "2026-09-16T04:16:57.107Z"
+    },
+    {
+      "id": "MR-20260915232925-4",
+      "empresa": "RUMBO MINERO",
+      "slug": "rumbo-minero",
+      "pais": "Perú",
+      "paisCodigo": "PE",
+      "ciudad": "Lima",
+      "categoria": "Capacitación",
+      "descripcion": "Noticias actualizadas, informes técnicos, entrevistas en video a expertos y ediciones especiales en línea.",
+      "productos": [],
+      "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260915232925-4.png",
+      "website": "https://rumbominero.com",
+      "whatsapp": "+51955319531",
+      "email": "info@rumbominero.com",
+      "estado": "PUBLICADO",
+      "rankingAmount": 10,
+      "rankingSince": "2026-09-16T04:31:06.246Z"
     }
   ]
 }
