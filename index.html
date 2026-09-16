@@ -96,7 +96,9 @@
     <button id="minusBtn" class="stepper-btn align-middle inline-flex w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 items-center justify-center text-gray-500 mx-1">
       <i class="fa-solid fa-minus text-sm"></i>
     </button>
-    <span id="heroAmount" class="text-brand-600">S/300</span>
+    <span class="text-brand-600">S/</span><input id="heroAmountInput" type="text" inputmode="numeric" autocomplete="off"
+      class="text-brand-600 font-helv font-bold bg-transparent border-b-2 border-brand-200 focus:border-brand-600 outline-none text-center align-middle"
+      style="width:4ch;" value="300">
     <button id="plusBtn" class="stepper-btn align-middle inline-flex w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 items-center justify-center text-gray-500 mx-1">
       <i class="fa-solid fa-plus text-sm"></i>
     </button>
@@ -174,8 +176,8 @@
 <script>
 const DATA_URL = './data/ranking.json';
 const WHATSAPP_ADMIN = '51913090906'; // TODO: reemplazar por el WhatsApp real de INFOSET
-const STEP = 5;         // paso mínimo para pujar por una posición
-const MIN_AMOUNT = 5;   // mínimo para simplemente entrar al final del ranking
+const STEP = 5;          // paso mínimo para pujar por una posición
+const MIN_AMOUNT = 10;   // mínimo para simplemente entrar al ranking
 const PAGE_SIZE = 50;
 document.getElementById('contactosLink').href = `https://wa.me/${WHATSAPP_ADMIN}`;
 
@@ -338,29 +340,56 @@ function populateFilters(){
   });
 }
 
+const heroAmountInput = document.getElementById('heroAmountInput');
+
+function sizeHeroInput(){
+  const len = Math.max(1, heroAmountInput.value.length);
+  heroAmountInput.style.width = (len + 0.6) + 'ch';
+}
+
 function updateHero(){
   const sorted = sortEmpresas(empresas);
   let pos = 1;
   for(const e of sorted){ if(e.rankingAmount >= heroAmount) pos++; else break; }
   document.getElementById('heroPos').textContent = '#' + pos;
-  document.getElementById('heroAmount').textContent = fmtMonto(heroAmount);
   document.getElementById('heroUsd').textContent = heroAmount > 0 ? `≈ ${fmtUSD(heroAmount)}` : '';
   return pos;
 }
 
-document.getElementById('minusBtn').addEventListener('click', ()=>{
-  heroAmount = Math.max(MIN_AMOUNT, heroAmount - STEP);
+// Sincroniza el input, su ancho y vuelve a calcular la posición.
+function setHeroAmount(val){
+  heroAmount = Math.max(0, val);
+  heroAmountInput.value = heroAmount;
+  sizeHeroInput();
+  updateHero();
+}
+
+// El usuario escribe el monto a mano: solo dígitos, recalcula la posición en vivo.
+heroAmountInput.addEventListener('input', ()=>{
+  const digits = heroAmountInput.value.replace(/[^0-9]/g, '');
+  heroAmountInput.value = digits;
+  heroAmount = digits === '' ? 0 : parseInt(digits, 10);
+  sizeHeroInput();
   updateHero();
 });
+// Al salir del campo, aplica el mínimo (S/10) si escribió menos o lo dejó vacío.
+heroAmountInput.addEventListener('blur', ()=>{
+  setHeroAmount(Math.max(MIN_AMOUNT, heroAmount));
+});
+heroAmountInput.addEventListener('keydown', (ev)=>{
+  if(ev.key === 'Enter') heroAmountInput.blur();
+});
+
+document.getElementById('minusBtn').addEventListener('click', ()=>{
+  setHeroAmount(Math.max(MIN_AMOUNT, heroAmount - STEP));
+});
 document.getElementById('plusBtn').addEventListener('click', ()=>{
-  heroAmount += STEP;
-  updateHero();
+  setHeroAmount(heroAmount + STEP);
 });
 document.getElementById('claimBtn').addEventListener('click', ()=>{
   const nombre = document.getElementById('empresaNombreInput').value.trim() || 'mi empresa';
   const cat = selectedHeroCat || 'sin categoría';
   const pos = updateHero();
-
   // Muestra en pantalla lo que se va a enviar (queda visible, no desaparece)
   document.getElementById('claimConfirmText').textContent =
     `${nombre} · ${cat} · puesto #${pos} por ${fmtMonto(heroAmount)} (${fmtUSD(heroAmount)})`;
@@ -457,8 +486,7 @@ function render(){
   container.querySelectorAll('.claim-btn').forEach(btn=>{
     btn.addEventListener('click', (ev)=>{
       ev.stopPropagation();
-      heroAmount = Number(btn.dataset.amount);
-      updateHero();
+      setHeroAmount(Number(btn.dataset.amount));
       window.scrollTo({top:0, behavior:'smooth'});
     });
   });
@@ -540,7 +568,7 @@ Promise.all([
     const maxAmount = Math.max(...empresas.map(e=>e.rankingAmount));
     heroAmount = maxAmount + STEP;
   }
-  updateHero();
+  setHeroAmount(heroAmount);
   render();
 }).catch(err=>{
   document.getElementById('listContainer').innerHTML =
