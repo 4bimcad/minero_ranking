@@ -531,7 +531,7 @@ document.getElementById('overlay').addEventListener('click', (ev)=>{
 document.addEventListener('keydown', (ev)=>{ if(ev.key === 'Escape') closeModal(); });
 
 Promise.all([
-  fetch(DATA_URL).then(r=>r.json()),
+  fetch(DATA_URL + '?t=' + Date.now()).then(r=>r.json()),
   loadExchangeRate()
 ]).then(([data])=>{
   empresas = (data.empresas || []).filter(e=>e.estado === 'PUBLICADO');
