@@ -1,6 +1,24 @@
 {
-  "updatedAt": "2026-09-16T04:31:13.146Z",
+  "updatedAt": "2026-09-16T04:44:15.912Z",
   "empresas": [
+    {
+      "id": "MR-20260915234204-5",
+      "empresa": "TRAFIGURA",
+      "slug": "trafigura",
+      "pais": "Perú",
+      "paisCodigo": "PE",
+      "ciudad": "Lima",
+      "categoria": "Transporte y Logística",
+      "descripcion": "Compra, Venta y Transporte de materias primas y energía a nivel global.",
+      "productos": [],
+      "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260915234204-5.png",
+      "website": "https://trafigura.com",
+      "whatsapp": "+5114120800",
+      "email": "enquiries@trafigura.com",
+      "estado": "PUBLICADO",
+      "rankingAmount": 500,
+      "rankingSince": "2026-09-16T04:44:04.057Z"
+    },
     {
       "id": "MR-20260914164916-1",
       "empresa": "INCAJATA S.A.C.",
