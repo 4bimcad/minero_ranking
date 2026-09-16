@@ -1,24 +1,6 @@
 {
-  "updatedAt": "2026-09-15T01:06:57.795Z",
+  "updatedAt": "2026-09-16T04:00:04.708Z",
   "empresas": [
-    {
-      "id": "TEST-001",
-      "empresa": "Empresa Test Ranking",
-      "slug": "",
-      "pais": "",
-      "paisCodigo": "",
-      "ciudad": "",
-      "categoria": "",
-      "descripcion": "",
-      "productos": [],
-      "logo": "",
-      "website": "",
-      "whatsapp": "",
-      "email": "",
-      "estado": "PUBLICADO",
-      "rankingAmount": 320,
-      "rankingSince": "2026-09-15T01:06:55.766Z"
-    },
     {
       "id": "MR-20260914164916-1",
       "empresa": "INCAJATA S.A.C.",
@@ -27,15 +9,33 @@
       "paisCodigo": "PE",
       "ciudad": "Arequipa",
       "categoria": "Empresas Mineras",
-      "descripcion": "Actividad minera, capacitaciòn, consultorio.",
+      "descripcion": "Consultoría y Proyectos Mineros, Gestión y Administración, Procesamiento.",
       "productos": [],
       "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260914164916-1.png",
       "website": "https://incajata.org.pe",
       "whatsapp": "+51963299237",
       "email": "incajata@gmail.com",
       "estado": "PUBLICADO",
-      "rankingAmount": 300,
-      "rankingSince": "2026-09-14T21:49:16.959Z"
+      "rankingAmount": 305,
+      "rankingSince": "2026-09-16T03:36:25.990Z"
+    },
+    {
+      "id": "MR-20260915224724-2",
+      "empresa": "POLIPROM S.A.C.",
+      "slug": "poliprom-s-a-c",
+      "pais": "Perú",
+      "paisCodigo": "PE",
+      "ciudad": "Lima",
+      "categoria": "Empresas Mineras",
+      "descripcion": "Compra venta de Concentrados (Zn, Pb, Cu, Au, Ag, etc). Procesamiento",
+      "productos": [],
+      "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260915224724-2.jpg",
+      "website": "https://poliprom.pe",
+      "whatsapp": "+51929295522",
+      "email": "info@poliprom.pe",
+      "estado": "PUBLICADO",
+      "rankingAmount": 10,
+      "rankingSince": "2026-09-16T04:00:00.958Z"
     }
   ]
 }
