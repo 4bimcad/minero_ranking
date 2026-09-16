@@ -271,7 +271,7 @@ function absoluteUrl(url){
 
   if(/^http?:\/\//i.test(url)) return url;
 
-  return 'https://' + url.replace(/^\/+/, '');
+  return url.replace(/^\/+/, '');
 }
 
 function logoHtml(e){
