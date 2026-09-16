@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-16T04:53:47.880Z",
+  "updatedAt": "2026-09-16T04:56:58.509Z",
   "empresas": [
     {
       "id": "MR-20260915234204-5",
@@ -56,6 +56,24 @@
       "rankingSince": "2026-09-16T04:53:34.936Z"
     },
     {
+      "id": "MR-20260915232925-4",
+      "empresa": "RUMBO MINERO",
+      "slug": "rumbo-minero",
+      "pais": "Perú",
+      "paisCodigo": "PE",
+      "ciudad": "Lima",
+      "categoria": "Capacitación",
+      "descripcion": "Noticias actualizadas, informes técnicos, entrevistas en video a expertos y ediciones especiales en línea.",
+      "productos": [],
+      "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260915232925-4.png",
+      "website": "https://rumbominero.com",
+      "whatsapp": "+51955319531",
+      "email": "info@rumbominero.com",
+      "estado": "PUBLICADO",
+      "rankingAmount": 20,
+      "rankingSince": "2026-09-16T04:56:49.884Z"
+    },
+    {
       "id": "MR-20260915224724-2",
       "empresa": "POLIPROM S.A.C.",
       "slug": "poliprom-s-a-c",
@@ -90,24 +108,6 @@
       "estado": "PUBLICADO",
       "rankingAmount": 10,
       "rankingSince": "2026-09-16T04:16:57.107Z"
-    },
-    {
-      "id": "MR-20260915232925-4",
-      "empresa": "RUMBO MINERO",
-      "slug": "rumbo-minero",
-      "pais": "Perú",
-      "paisCodigo": "PE",
-      "ciudad": "Lima",
-      "categoria": "Capacitación",
-      "descripcion": "Noticias actualizadas, informes técnicos, entrevistas en video a expertos y ediciones especiales en línea.",
-      "productos": [],
-      "logo": "https://raw.githubusercontent.com/4bimcad/minero_ranking/main/assets/logos/MR-20260915232925-4.png",
-      "website": "https://rumbominero.com",
-      "whatsapp": "+51955319531",
-      "email": "info@rumbominero.com",
-      "estado": "PUBLICADO",
-      "rankingAmount": 10,
-      "rankingSince": "2026-09-16T04:31:06.246Z"
     }
   ]
 }
